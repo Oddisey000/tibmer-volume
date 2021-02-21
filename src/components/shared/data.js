@@ -1,5 +1,5 @@
 // Define timber volume data according to ГОСТ 2708-75
-const volumeData = {
+export const volumeData = {
   1: {
     3: 0,
     4: 0,

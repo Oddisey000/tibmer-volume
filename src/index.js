@@ -1,3 +1,8 @@
+// These must be the first lines in src/index.js added support for old browsers
+import "react-app-polyfill/ie9";
+import "react-app-polyfill/ie11";
+import "react-app-polyfill/stable";
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
