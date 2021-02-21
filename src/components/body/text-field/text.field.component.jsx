@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
-      width: '25ch',
+      width: '11ch',
     },
   },
 }));
@@ -19,7 +19,6 @@ export default function BasicTextFields() {
       <TextField id="standard-basic" label="Діаметр(см)" />
       <TextField id="standard-basic" label="Довжина(м)" />
       <TextField id="standard-basic" label="Кількіть(шт)" />
-      <TextField id="outlined-basic" label="Ціна" variant="outlined" />
     </form>
   );
 }
