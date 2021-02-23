@@ -1,13 +1,14 @@
 import React from "react";
+import DenseAppBar from "./app-bar/app.bar.component";
 
-import PersistentDrawerLeft from "./app-bar/app-bar.component";
-
-const Header = () => {
-  return (
-    <div id="app-header">
-      <PersistentDrawerLeft />
-    </div>
-  );
-};
+class Header extends React.Component {
+  render() {
+    return (
+      <div id="app-body">
+        <DenseAppBar />
+      </div>
+    );
+  }
+}
 
 export default Header;
