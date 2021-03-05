@@ -16,9 +16,10 @@ import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 
-function createData(id, name, calories, fat, carbs, protein) {
-  return { id, name, calories, fat, carbs, protein };
+function createData(id, diametr, length, quantity, volume, price) {
+  return { id, diametr, length, quantity, volume, price };
 }
 
 const rows = [
@@ -174,6 +175,11 @@ const EnhancedTableToolbar = (props) => {
           variant="subtitle1"
           component="div"
         >
+          <Tooltip title="Змінити">
+            <IconButton aria-label="change">
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
           {numSelected} Обрано
         </Typography>
       ) : (
@@ -212,7 +218,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     width: "100%",
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(1)
   },
   table: {
     maxWidth: "100%"
@@ -229,7 +235,7 @@ const useStyles = makeStyles((theme) => ({
     width: 1
   },
   tableHeigth: {
-    maxHeight: 290
+    maxHeight: "30vh"
   }
 }));
 
@@ -330,12 +336,12 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.name}
+                        {row.diametr}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="right">{row.length}</TableCell>
+                      <TableCell align="right">{row.quantity}</TableCell>
+                      <TableCell align="right">{row.volume}</TableCell>
+                      <TableCell align="right">{row.price}</TableCell>
                     </TableRow>
                   );
                 }

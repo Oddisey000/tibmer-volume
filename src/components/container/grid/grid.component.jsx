@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import BasicTextFields from "../text-fields/text.fields.component";
 import AddButtonComponent from "../add-button/add-button.component";
 import DataTableComponent from "../data-table/data.table.component";
+import SimplePaper from "../results-block/results.block.component";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +25,9 @@ export default function AppGridComponent() {
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <SimplePaper />
+        </Grid>
         <Grid item xs={12}>
           <BasicTextFields />
         </Grid>

@@ -6,7 +6,7 @@ import AddIcon from "@material-ui/icons/Add";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
-      margin: theme.spacing(1)
+      margin: theme.spacing(0)
     }
   },
   extendedIcon: {
