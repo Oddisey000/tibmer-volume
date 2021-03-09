@@ -19,6 +19,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+// When user click away (usualy near the + button) this will unselect all the items inside table
+const handleClick = () => {
+  console.log("onClickOutside() method called");
+};
+
 export default function AppGridComponent() {
   const classes = useStyles();
 
@@ -31,7 +36,7 @@ export default function AppGridComponent() {
         <Grid item xs={12}>
           <BasicTextFields />
         </Grid>
-        <Grid item xs={12}>
+        <Grid onClick={handleClick} item xs={12}>
           <AddButtonComponent />
         </Grid>
         <Grid item xs={12}>

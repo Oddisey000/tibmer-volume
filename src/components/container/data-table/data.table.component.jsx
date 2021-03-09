@@ -168,6 +168,15 @@ const EnhancedTableToolbar = (props) => {
         [classes.highlight]: numSelected > 0
       })}
     >
+      {numSelected === 1 ? (
+        <Tooltip title="Змінити">
+          <IconButton aria-label="change">
+            <EditIcon />
+          </IconButton>
+        </Tooltip>
+      ) : (
+        <div></div>
+      )}
       {numSelected > 0 ? (
         <Typography
           className={classes.title}
@@ -175,11 +184,6 @@ const EnhancedTableToolbar = (props) => {
           variant="subtitle1"
           component="div"
         >
-          <Tooltip title="Змінити">
-            <IconButton aria-label="change">
-              <EditIcon />
-            </IconButton>
-          </Tooltip>
           {numSelected} Обрано
         </Typography>
       ) : (
