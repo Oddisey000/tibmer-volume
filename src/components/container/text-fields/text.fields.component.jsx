@@ -17,8 +17,18 @@ export default function BasicTextFields() {
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
-      <TextField type="number" id="standard-basic" label="Діаметр см" />
-      <TextField type="number" id="standard-basic" label="Довжина м" />
+      <TextField
+        placeholder="120 max"
+        type="number"
+        id="standard-basic"
+        label="Діаметр см"
+      />
+      <TextField
+        placeholder="9.5 max"
+        type="number"
+        id="standard-basic"
+        label="Довжина м"
+      />
       <TextField type="number" id="standard-basic" label="Кількість" />
       <TextField
         type="number"

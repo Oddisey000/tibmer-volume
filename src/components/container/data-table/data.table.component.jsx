@@ -18,6 +18,9 @@ import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 
+// Declare array which will contaigne positions to delete from data array
+let indexesToDelete = [];
+
 function createData(id, diametr, length, quantity, volume, price) {
   return { id, diametr, length, quantity, volume, price };
 }
@@ -162,6 +165,12 @@ const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
 
+  // Handle deletion of array element
+  const handleDelete = () => {
+    indexesToDelete.map((element) => rows.splice(element, 1));
+    console.log(indexesToDelete);
+  };
+
   return (
     <Toolbar
       className={clsx(classes.root, {
@@ -199,7 +208,7 @@ const EnhancedTableToolbar = (props) => {
 
       {numSelected > 0 ? (
         <Tooltip title="Видалити">
-          <IconButton aria-label="delete">
+          <IconButton onClick={handleDelete} aria-label="delete">
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -261,6 +270,8 @@ export default function EnhancedTable() {
     if (event.target.checked) {
       const newSelecteds = rows.map((n) => n.id);
       setSelected(newSelecteds);
+      // Add all selected elements to the array
+      indexesToDelete = newSelecteds;
       return;
     }
     setSelected([]);
@@ -284,6 +295,8 @@ export default function EnhancedTable() {
     }
 
     setSelected(newSelected);
+    // Add all selected elements to the array
+    indexesToDelete = newSelected;
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
