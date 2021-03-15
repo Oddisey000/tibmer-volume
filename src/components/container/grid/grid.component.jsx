@@ -24,25 +24,34 @@ const handleClick = () => {
   console.log("onClickOutside() method called");
 };
 
-export default function AppGridComponent() {
+export default function AppGridComponent({ settings }) {
   const classes = useStyles();
 
-  return (
-    <div className={classes.root}>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <SimplePaper />
-        </Grid>
-        <Grid item xs={12}>
-          <BasicTextFields />
-        </Grid>
-        <Grid onClick={handleClick} item xs={12}>
-          <AddButtonComponent />
-        </Grid>
-        <Grid item xs={12}>
-          <DataTableComponent />
-        </Grid>
+  const displayData = settings.appHasData ? (
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <SimplePaper />
       </Grid>
-    </div>
+      <Grid item xs={12}>
+        <BasicTextFields />
+      </Grid>
+      <Grid onClick={handleClick} item xs={12}>
+        <AddButtonComponent />
+      </Grid>
+      <Grid item xs={12}>
+        <DataTableComponent />
+      </Grid>
+    </Grid>
+  ) : (
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <BasicTextFields />
+      </Grid>
+      <Grid onClick={handleClick} item xs={12}>
+        <AddButtonComponent />
+      </Grid>
+    </Grid>
   );
+
+  return <div className={classes.root}>{displayData}</div>;
 }

@@ -3,17 +3,24 @@ import "react-app-polyfill/ie9";
 import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+// Implement Redux
+import { Provider } from "react-redux";
+import { store } from "./redux/root.store";
 
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+
+const rootElement = document.getElementById("root");
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>,
+  rootElement
 );
 
 // If you want to start measuring performance in your app, pass a function

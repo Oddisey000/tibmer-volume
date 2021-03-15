@@ -167,8 +167,7 @@ const EnhancedTableToolbar = (props) => {
 
   // Handle deletion of array element
   const handleDelete = () => {
-    indexesToDelete.map((element) => rows.splice(element, 1));
-    console.log(indexesToDelete);
+    // indexesToDelete.map((element) => rows.splice(element, 1));
   };
 
   return (
@@ -297,6 +296,7 @@ export default function EnhancedTable() {
     setSelected(newSelected);
     // Add all selected elements to the array
     indexesToDelete = newSelected;
+    console.log(selectedIndex); // value of 0 will unselect all items from the table
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
