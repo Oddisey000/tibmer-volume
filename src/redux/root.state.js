@@ -8,9 +8,11 @@ const INITIAL_STATE = {
     },
     workingMode: {
       timberVolume: {
+        isSelected: true,
         timberVolumeType: ""
       },
       boardVolume: {
+        isSelected: false,
         boardVolumeType: ""
       }
     },
@@ -19,14 +21,17 @@ const INITIAL_STATE = {
     // Conditionaly select or unselect elements inside table and replace action buttons
     selectedItems: {
       editMode: false,
-      clickAway: 1
+      clickAway: false
     }
   },
   appData: {
     // User data stored in data array
     calculatedResults: [],
     // Big global object of data
-    volumeData: {}
+    volumeData: {
+      //timberVolume: {},
+      //boardVolume: {}
+    }
   }
 };
 

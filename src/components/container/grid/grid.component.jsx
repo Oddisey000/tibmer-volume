@@ -26,8 +26,10 @@ const handleClick = () => {
 
 export default function AppGridComponent({ settings }) {
   const classes = useStyles();
+  // Testing
+  console.log(settings);
 
-  const displayData = settings.appHasData ? (
+  const displayData = settings.settings.appHasData ? (
     <Grid container spacing={3}>
       <Grid item xs={12}>
         <SimplePaper />

@@ -6,6 +6,10 @@ import Container from "@material-ui/core/Container";
 
 import AppGridComponent from "./grid/grid.component";
 
+// Import data and redux functions
+import { volumeDataStandard, VolumeDataISO } from "../shared/data";
+import { getVolumeData } from "../../redux/app-data/app-data.actions";
+
 const AppContainer = ({ settings }) => {
   return (
     <React.Fragment>
@@ -19,8 +23,14 @@ const AppContainer = ({ settings }) => {
 
 const mapStateToProps = (state) => {
   return {
-    settings: state.settings
+    settings: state
   };
 };
 
-export default connect(mapStateToProps)(AppContainer);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getVolumeData: (item, item2) => dispatch(getVolumeData(item, item2))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);

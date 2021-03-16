@@ -6768,3 +6768,6 @@ export const volumeDataStandard = {
     120: 13.67
   }
 };
+
+// Define timber volume data according to ISO 4480-83
+export const VolumeDataISO = {};
