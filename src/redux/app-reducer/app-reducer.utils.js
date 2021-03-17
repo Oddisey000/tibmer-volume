@@ -14,11 +14,11 @@ export const createTimberVolumeData = (
   }
 
   // Testing
-  const found = array1.findIndex(function (element) {
+  /*const found = array1.findIndex(function (element) {
     if (element.length == 9 && element.diametr == 22) {
       return element;
     }
-  });
+  });*/
 
   calculatedResults.push(
     createData(
@@ -36,10 +36,10 @@ export const createTimberVolumeData = (
 
 // Return saved constants from data.js to global state database
 export const createVolumeData = (volumeDataStandard, VolumeDataISO) => {
-  const timberVolume = {
-    volumeDataStandard: volumeDataStandard,
-    VolumeDataISO: VolumeDataISO
+  return {
+    timberVolume: {
+      volumeDataStandard: volumeDataStandard,
+      VolumeDataISO: VolumeDataISO
+    }
   };
-
-  return timberVolume;
 };

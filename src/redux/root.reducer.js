@@ -2,12 +2,10 @@
 import { combineReducers } from "redux";
 
 // Imports custom variables
-import settingsReducer from "./settings/settings.reducer";
-import appDataReducer from "./app-data/app-data.reducer";
+import appReducer from "./app-reducer/app.reducer";
 
 const rootReducer = combineReducers({
-  settings: settingsReducer,
-  appData: appDataReducer
+  appReducer: appReducer
 });
 
 // Let redux-persist handle local storage and global reducer of the application
