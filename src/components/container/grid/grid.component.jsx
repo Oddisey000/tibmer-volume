@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
@@ -6,6 +7,10 @@ import BasicTextFields from "../text-fields/text.fields.component";
 import AddButtonComponent from "../add-button/add-button.component";
 import DataTableComponent from "../data-table/data.table.component";
 import SimplePaper from "../results-block/results.block.component";
+
+// Import data and redux functions
+import { volumeDataStandard, VolumeDataISO } from "../../shared/data";
+import { getVolumeData } from "../../../redux/app-reducer/app-reducer.actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,12 +29,12 @@ const handleClick = () => {
   console.log("onClickOutside() method called");
 };
 
-export default function AppGridComponent({ settings }) {
+const AppGridComponent = ({ appData }) => {
   const classes = useStyles();
   // Testing
-  console.log(settings);
+  console.log(appData.appReducer);
 
-  const displayData = settings.settings.appHasData ? (
+  const displayData = appData.appReducer.appHasData ? (
     <Grid container spacing={3}>
       <Grid item xs={12}>
         <SimplePaper />
@@ -56,4 +61,18 @@ export default function AppGridComponent({ settings }) {
   );
 
   return <div className={classes.root}>{displayData}</div>;
-}
+};
+
+const mapStateToProps = (state) => {
+  return {
+    appData: state
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getVolumeData: dispatch(getVolumeData(volumeDataStandard, VolumeDataISO))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppGridComponent);

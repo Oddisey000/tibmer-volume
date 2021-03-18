@@ -41,9 +41,6 @@ const rows = [
   createData(12, 25, 305, 3.7, 67, 4.3)
 ];
 
-// Testing
-console.log(rows);
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
