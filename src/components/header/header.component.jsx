@@ -1,11 +1,11 @@
 import React from "react";
 
-import DenseAppBar from "./app-bar/app.bar.component";
+import PersistentDrawerLeft from "./app-bar/app.bar.component";
 
 const Header = () => {
   return (
     <div id="app-footer">
-      <DenseAppBar />
+      <PersistentDrawerLeft />
     </div>
   );
 };
