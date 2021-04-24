@@ -20,19 +20,19 @@ export default function BasicTextFields() {
       <TextField
         placeholder="120 max"
         type="number"
-        id="standard-basic"
+        id="diametr"
         label="Діаметр см"
       />
       <TextField
         placeholder="9.5 max"
         type="number"
-        id="standard-basic"
+        id="length"
         label="Довжина м"
       />
-      <TextField type="number" id="standard-basic" label="Кількість" />
+      <TextField type="number" id="quantity" label="Кількість" />
       <TextField
         type="number"
-        id="outlined-basic"
+        id="price"
         label="Ціна"
         variant="outlined"
       />
