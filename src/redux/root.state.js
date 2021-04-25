@@ -1,8 +1,10 @@
+import { languages } from '../components/shared/data';
+
 const INITIAL_STATE = {
   languages: {
-    appLanguage: "",
-    english: {},
-    ukrainian: {}
+    appLanguage: 'english',
+    english: languages.english,
+    ukrainian: languages.ukrainian
   },
   workingMode: {
     timberVolume: {

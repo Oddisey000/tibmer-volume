@@ -20,6 +20,17 @@ import EditIcon from "@material-ui/icons/Edit";
 
 // Declare array which will contaigne positions to delete from data array
 let indexesToDelete = [];
+let appDataVar;
+let selectedLanguage;
+let tableLabels;
+
+const takeAppData = (appData) => {
+  return appDataVar = appData;
+};
+
+const takeAppLanguage = (appData) => {
+  return selectedLanguage = appData.appReducer.languages.appLanguage;
+};
 
 function createData(id, diametr, length, quantity, volume, price) {
   return { id, diametr, length, quantity, volume, price };
@@ -74,9 +85,9 @@ const headCells = [
     disablePadding: true,
     label: "Діаметр"
   },
-  { id: "lenght", numeric: true, disablePadding: true, label: "Довжина" },
+  { id: "length", numeric: true, disablePadding: true, label: "" },
   { id: "quantity", numeric: true, disablePadding: true, label: "Кількість" },
-  { id: "m3", numeric: true, disablePadding: false, label: "м3" },
+  { id: "volume", numeric: true, disablePadding: false, label: "м3" },
   { id: "price", numeric: true, disablePadding: false, label: "Ціна" }
 ];
 
@@ -117,7 +128,7 @@ function EnhancedTableHead(props) {
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
             >
-              {headCell.label}
+              {tableLabels[headCell.id]}
               {orderBy === headCell.id ? (
                 <span className={classes.visuallyHidden}>
                   {order === "desc" ? "sorted descending" : "sorted ascending"}
@@ -162,6 +173,14 @@ const useToolbarStyles = makeStyles((theme) => ({
 }));
 
 const EnhancedTableToolbar = (props) => {
+  tableLabels = {
+    diametr: appDataVar.appReducer.languages[selectedLanguage].calculation.diametr,
+    length: appDataVar.appReducer.languages[selectedLanguage].calculation.length,
+    quantity: appDataVar.appReducer.languages[selectedLanguage].calculation.quantity,
+    volume: appDataVar.appReducer.languages[selectedLanguage].calculation.volume,
+    price: appDataVar.appReducer.languages[selectedLanguage].calculation.price
+  };
+
   const classes = useToolbarStyles();
   const { numSelected } = props;
 
@@ -201,7 +220,7 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          Розрахунок
+          {appDataVar.appReducer.languages[selectedLanguage].calculation.title}
         </Typography>
       )}
 
@@ -251,7 +270,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function EnhancedTable() {
+export default function EnhancedTable({...appData}) {
+  takeAppData(appData);
+  takeAppLanguage(appData);
+
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");

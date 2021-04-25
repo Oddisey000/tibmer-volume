@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from 'react-redux';
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -80,7 +81,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function PersistentDrawerLeft() {
+const PersistentDrawerLeft = ({ ...appData }) => {
+  const selectedLanguage = appData.appData.appReducer.languages.appLanguage;
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -113,7 +115,7 @@ export default function PersistentDrawerLeft() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Кубатурник
+            {appData.appData.appReducer.languages[selectedLanguage].leftSide.appName}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -148,3 +150,11 @@ export default function PersistentDrawerLeft() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    appData: state
+  };
+};
+
+export default connect(mapStateToProps)(PersistentDrawerLeft);

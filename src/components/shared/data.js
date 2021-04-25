@@ -6771,3 +6771,49 @@ export const volumeDataStandard = {
 
 // Define timber volume data according to ISO 4480-83
 export const VolumeDataISO = {};
+
+// Define Languages objects
+export const languages = {
+  english: {
+    main: {
+      diametr: 'Diametr cm',
+      length: 'Length m',
+      quantity: 'Quantity',
+      price: 'Price'
+    },
+    calculation: {
+      title: 'Calculation',
+      diametr: 'Diametr',
+      length: 'Length',
+      quantity: 'Quantity',
+      volume: 'm3',
+      price: 'Price'
+    },
+    leftSide: {
+      appName: 'Timber Volume',
+      timberVolume: 'Timber Volume',
+      language: 'Language'
+    }
+  },
+  ukrainian: {
+    main: {
+      diametr: 'Діаметр см',
+      length: 'Довжина м',
+      quantity: 'Кількість',
+      price: 'Ціна'
+    },
+    calculation: {
+      title: 'Розрахунок',
+      diametr: 'Діаметр',
+      length: 'Довжина',
+      quantity: 'Кількість',
+      volume: 'м3',
+      price: 'Ціна'
+    },
+    leftSide: {
+      appName: 'Кубатурник',
+      timberVolume: 'Ліс кругляк',
+      language: 'Мова'
+    }
+  }
+};

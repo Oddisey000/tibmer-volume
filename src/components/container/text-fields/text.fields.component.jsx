@@ -12,7 +12,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function BasicTextFields() {
+export default function BasicTextFields({ ...appData }) {
+  const selectedLanguage = appData.appReducer.languages.appLanguage
+
   const classes = useStyles();
 
   return (
@@ -21,19 +23,19 @@ export default function BasicTextFields() {
         placeholder="120 max"
         type="number"
         id="diametr"
-        label="Діаметр см"
+        label={appData.appReducer.languages[selectedLanguage].main.diametr}
       />
       <TextField
         placeholder="9.5 max"
         type="number"
         id="length"
-        label="Довжина м"
+        label={appData.appReducer.languages[selectedLanguage].main.length}
       />
-      <TextField type="number" id="quantity" label="Кількість" />
+      <TextField type="number" id="quantity" label={appData.appReducer.languages[selectedLanguage].main.quantity} />
       <TextField
         type="number"
         id="price"
-        label="Ціна"
+        label={appData.appReducer.languages[selectedLanguage].main.price}
         variant="outlined"
       />
     </form>

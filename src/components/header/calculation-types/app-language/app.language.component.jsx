@@ -18,9 +18,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function LanguageComponent() {
+export default function LanguageComponent({ ...appData }) {
+  const selectedLanguage = appData.appReducer.languages.appLanguage
+
   const classes = useStyles();
-  const [value, setValue] = React.useState("ukrainian");
+  const [value, setValue] = React.useState(selectedLanguage);
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -28,7 +30,7 @@ export default function LanguageComponent() {
 
   return (
     <FormControl component="fieldset" className={classes.root}>
-      <div className={classes.typography}>Мова</div>
+      <div className={classes.typography}>{appData.appReducer.languages[selectedLanguage].leftSide.language}</div>
       <RadioGroup
         aria-label="app-language"
         name="language"
