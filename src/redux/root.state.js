@@ -1,7 +1,7 @@
 import { languages } from "../components/shared/data";
 
 const INITIAL_STATE = {
-  appLanguage: "english",
+  appLanguage: "ukrainian",
   languages: {
     english: languages.english,
     ukrainian: languages.ukrainian

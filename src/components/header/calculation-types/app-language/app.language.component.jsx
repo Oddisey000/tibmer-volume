@@ -41,7 +41,7 @@ const LanguageComponent = ({ changeAppLanguage, appData }) => {
       <RadioGroup
         aria-label="app-language"
         name="language"
-        value={value}
+        value={selectedLanguage}
         onChange={handleChange}
       >
         <FormControlLabel
