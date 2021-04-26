@@ -1,9 +1,13 @@
 import React from "react";
+import { connect } from "react-redux";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
+
+// Import data and redux functions
+import { changeAppLanguage } from "../../../../redux/app-reducer/app-reducer.actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,19 +22,21 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function LanguageComponent({ ...appData }) {
-  const selectedLanguage = appData.appReducer.languages.appLanguage
+const LanguageComponent = ({ ...appData }) => {
+  const selectedLanguage = appData.appData.appReducer.languages.appLanguage
 
   const classes = useStyles();
   const [value, setValue] = React.useState(selectedLanguage);
 
   const handleChange = (event) => {
+    changeAppLanguage("ukrainian");
     setValue(event.target.value);
+    console.log(appData);
   };
 
   return (
     <FormControl component="fieldset" className={classes.root}>
-      <div className={classes.typography}>{appData.appReducer.languages[selectedLanguage].leftSide.language}</div>
+      <div className={classes.typography}>{appData.appData.appReducer.languages[selectedLanguage].leftSide.language}</div>
       <RadioGroup
         aria-label="app-language"
         name="language"
@@ -51,3 +57,17 @@ export default function LanguageComponent({ ...appData }) {
     </FormControl>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    appData: state
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeAppLanguage: (item) => dispatch(changeAppLanguage(item))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LanguageComponent);

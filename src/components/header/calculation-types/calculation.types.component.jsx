@@ -10,7 +10,7 @@ const CalculationTypes = ({appData}) => {
     <div id="app-footer">
       <RoundTimberComponent { ...appData } />
       <Divider />
-      <LanguageComponent { ...appData } />
+      <LanguageComponent />
       <Divider />
     </div>
   );

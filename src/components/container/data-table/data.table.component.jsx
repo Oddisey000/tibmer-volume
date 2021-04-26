@@ -82,13 +82,12 @@ const headCells = [
   {
     id: "diametr",
     numeric: false,
-    disablePadding: true,
-    label: "Діаметр"
+    disablePadding: true
   },
-  { id: "length", numeric: true, disablePadding: true, label: "" },
-  { id: "quantity", numeric: true, disablePadding: true, label: "Кількість" },
-  { id: "volume", numeric: true, disablePadding: false, label: "м3" },
-  { id: "price", numeric: true, disablePadding: false, label: "Ціна" }
+  { id: "length", numeric: true, disablePadding: true },
+  { id: "quantity", numeric: true, disablePadding: true },
+  { id: "volume", numeric: true, disablePadding: false },
+  { id: "price", numeric: true, disablePadding: false }
 ];
 
 function EnhancedTableHead(props) {
@@ -104,6 +103,7 @@ function EnhancedTableHead(props) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
+  console.log(selectedLanguage); 
 
   return (
     <TableHead>
@@ -113,7 +113,7 @@ function EnhancedTableHead(props) {
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputProps={{ "aria-label": "Обрати всі елементи" }}
+            inputProps={{ "aria-label": appDataVar.appReducer.languages[selectedLanguage].calculation.checkboxInputProps }}
           />
         </TableCell>
         {headCells.map((headCell) => (
@@ -196,8 +196,8 @@ const EnhancedTableToolbar = (props) => {
       })}
     >
       {numSelected === 1 ? (
-        <Tooltip title="Змінити">
-          <IconButton aria-label="change">
+        <Tooltip title={appDataVar.appReducer.languages[selectedLanguage].calculation.changeSelected}>
+          <IconButton aria-label={appDataVar.appReducer.languages[selectedLanguage].calculation.changeSelected}>
             <EditIcon />
           </IconButton>
         </Tooltip>
@@ -211,7 +211,7 @@ const EnhancedTableToolbar = (props) => {
           variant="subtitle1"
           component="div"
         >
-          {numSelected} Обрано
+          {numSelected} {appDataVar.appReducer.languages[selectedLanguage].calculation.numSelected}
         </Typography>
       ) : (
         <Typography
@@ -225,8 +225,8 @@ const EnhancedTableToolbar = (props) => {
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title="Видалити">
-          <IconButton onClick={handleDelete} aria-label="delete">
+        <Tooltip title={appDataVar.appReducer.languages[selectedLanguage].calculation.deleteItems}>
+          <IconButton onClick={handleDelete} aria-label={appDataVar.appReducer.languages[selectedLanguage].calculation.deleteItems}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>

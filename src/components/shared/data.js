@@ -6787,7 +6787,11 @@ export const languages = {
       length: 'Length',
       quantity: 'Quantity',
       volume: 'm3',
-      price: 'Price'
+      price: 'Price',
+      checkboxInputProps: "Select all elements",
+      changeSelected: "Change",
+      numSelected: 'Selected',
+      deleteItems: 'Delete'
     },
     leftSide: {
       appName: 'Timber Volume',
@@ -6808,7 +6812,11 @@ export const languages = {
       length: 'Довжина',
       quantity: 'Кількість',
       volume: 'м3',
-      price: 'Ціна'
+      price: 'Ціна',
+      checkboxInputProps: "Обрати всі елементи",
+      changeSelected: 'Змінити',
+      numSelected: 'Обрано',
+      deleteItems: 'Видалити'
     },
     leftSide: {
       appName: 'Кубатурник',
