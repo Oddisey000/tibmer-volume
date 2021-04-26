@@ -22,21 +22,22 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const LanguageComponent = ({ ...appData }) => {
-  const selectedLanguage = appData.appData.appReducer.languages.appLanguage
+const LanguageComponent = ({ changeAppLanguage, appData }) => {
+  const selectedLanguage = appData.appReducer.appLanguage;
 
   const classes = useStyles();
   const [value, setValue] = React.useState(selectedLanguage);
 
   const handleChange = (event) => {
-    changeAppLanguage("ukrainian");
+    changeAppLanguage(event.target.value);
     setValue(event.target.value);
-    console.log(appData);
   };
 
   return (
     <FormControl component="fieldset" className={classes.root}>
-      <div className={classes.typography}>{appData.appData.appReducer.languages[selectedLanguage].leftSide.language}</div>
+      <div className={classes.typography}>
+        {appData.appReducer.languages[selectedLanguage].leftSide.language}
+      </div>
       <RadioGroup
         aria-label="app-language"
         name="language"
@@ -56,11 +57,11 @@ const LanguageComponent = ({ ...appData }) => {
       </RadioGroup>
     </FormControl>
   );
-}
+};
 
 const mapStateToProps = (state) => {
   return {
-    appData: state
+    appData: { ...state }
   };
 };
 

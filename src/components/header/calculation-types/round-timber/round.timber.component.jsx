@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function RoundTimberComponent({ ...appData }) {
-  const selectedLanguage = appData.appReducer.languages.appLanguage
+  const selectedLanguage = appData.appReducer.appLanguage;
   const classes = useStyles();
   const [value, setValue] = React.useState("standard");
 
@@ -30,7 +30,9 @@ export default function RoundTimberComponent({ ...appData }) {
 
   return (
     <FormControl component="fieldset" className={classes.root}>
-      <div className={classes.typography}>{appData.appReducer.languages[selectedLanguage].leftSide.timberVolume}</div>
+      <div className={classes.typography}>
+        {appData.appReducer.languages[selectedLanguage].leftSide.timberVolume}
+      </div>
       <RadioGroup
         aria-label="round-timber"
         name="round"

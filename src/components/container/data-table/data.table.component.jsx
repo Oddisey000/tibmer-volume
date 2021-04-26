@@ -25,11 +25,11 @@ let selectedLanguage;
 let tableLabels;
 
 const takeAppData = (appData) => {
-  return appDataVar = appData;
+  return (appDataVar = appData);
 };
 
 const takeAppLanguage = (appData) => {
-  return selectedLanguage = appData.appReducer.languages.appLanguage;
+  return (selectedLanguage = appData.appReducer.appLanguage);
 };
 
 function createData(id, diametr, length, quantity, volume, price) {
@@ -103,7 +103,6 @@ function EnhancedTableHead(props) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
-  console.log(selectedLanguage); 
 
   return (
     <TableHead>
@@ -113,7 +112,11 @@ function EnhancedTableHead(props) {
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputProps={{ "aria-label": appDataVar.appReducer.languages[selectedLanguage].calculation.checkboxInputProps }}
+            inputProps={{
+              "aria-label":
+                appDataVar.appReducer.languages[selectedLanguage].calculation
+                  .checkboxInputProps
+            }}
           />
         </TableCell>
         {headCells.map((headCell) => (
@@ -174,10 +177,14 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 const EnhancedTableToolbar = (props) => {
   tableLabels = {
-    diametr: appDataVar.appReducer.languages[selectedLanguage].calculation.diametr,
-    length: appDataVar.appReducer.languages[selectedLanguage].calculation.length,
-    quantity: appDataVar.appReducer.languages[selectedLanguage].calculation.quantity,
-    volume: appDataVar.appReducer.languages[selectedLanguage].calculation.volume,
+    diametr:
+      appDataVar.appReducer.languages[selectedLanguage].calculation.diametr,
+    length:
+      appDataVar.appReducer.languages[selectedLanguage].calculation.length,
+    quantity:
+      appDataVar.appReducer.languages[selectedLanguage].calculation.quantity,
+    volume:
+      appDataVar.appReducer.languages[selectedLanguage].calculation.volume,
     price: appDataVar.appReducer.languages[selectedLanguage].calculation.price
   };
 
@@ -196,8 +203,18 @@ const EnhancedTableToolbar = (props) => {
       })}
     >
       {numSelected === 1 ? (
-        <Tooltip title={appDataVar.appReducer.languages[selectedLanguage].calculation.changeSelected}>
-          <IconButton aria-label={appDataVar.appReducer.languages[selectedLanguage].calculation.changeSelected}>
+        <Tooltip
+          title={
+            appDataVar.appReducer.languages[selectedLanguage].calculation
+              .changeSelected
+          }
+        >
+          <IconButton
+            aria-label={
+              appDataVar.appReducer.languages[selectedLanguage].calculation
+                .changeSelected
+            }
+          >
             <EditIcon />
           </IconButton>
         </Tooltip>
@@ -211,7 +228,11 @@ const EnhancedTableToolbar = (props) => {
           variant="subtitle1"
           component="div"
         >
-          {numSelected} {appDataVar.appReducer.languages[selectedLanguage].calculation.numSelected}
+          {numSelected}{" "}
+          {
+            appDataVar.appReducer.languages[selectedLanguage].calculation
+              .numSelected
+          }
         </Typography>
       ) : (
         <Typography
@@ -225,8 +246,19 @@ const EnhancedTableToolbar = (props) => {
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title={appDataVar.appReducer.languages[selectedLanguage].calculation.deleteItems}>
-          <IconButton onClick={handleDelete} aria-label={appDataVar.appReducer.languages[selectedLanguage].calculation.deleteItems}>
+        <Tooltip
+          title={
+            appDataVar.appReducer.languages[selectedLanguage].calculation
+              .deleteItems
+          }
+        >
+          <IconButton
+            onClick={handleDelete}
+            aria-label={
+              appDataVar.appReducer.languages[selectedLanguage].calculation
+                .deleteItems
+            }
+          >
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -270,7 +302,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function EnhancedTable({...appData}) {
+export default function EnhancedTable({ ...appData }) {
   takeAppData(appData);
   takeAppLanguage(appData);
 

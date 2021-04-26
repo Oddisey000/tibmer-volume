@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BasicTextFields({ ...appData }) {
-  const selectedLanguage = appData.appReducer.languages.appLanguage
+  const selectedLanguage = appData.appReducer.appLanguage;
 
   const classes = useStyles();
 
@@ -31,7 +31,11 @@ export default function BasicTextFields({ ...appData }) {
         id="length"
         label={appData.appReducer.languages[selectedLanguage].main.length}
       />
-      <TextField type="number" id="quantity" label={appData.appReducer.languages[selectedLanguage].main.quantity} />
+      <TextField
+        type="number"
+        id="quantity"
+        label={appData.appReducer.languages[selectedLanguage].main.quantity}
+      />
       <TextField
         type="number"
         id="price"

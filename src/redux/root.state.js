@@ -1,8 +1,8 @@
-import { languages } from '../components/shared/data';
+import { languages } from "../components/shared/data";
 
 const INITIAL_STATE = {
+  appLanguage: "english",
   languages: {
-    appLanguage: 'english',
     english: languages.english,
     ukrainian: languages.ukrainian
   },
