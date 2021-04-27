@@ -16,10 +16,10 @@ const INITIAL_STATE = {
       boardVolumeType: ""
     }
   },
-  editMode: true,
+  editMode: false,
   clickAway: false,
   appDrawer: false,
-  appHasData: true,
+  appHasData: false,
   calculatedResults: [],
   // Big global object of data
   volumeData: {

@@ -6,7 +6,7 @@ import EditIcon from "@material-ui/icons/Edit";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
-      margin: theme.spacing(1)
+      margin: theme.spacing(0)
     }
   },
   extendedIcon: {
