@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 
 import BasicTextFields from "../text-fields/text.fields.component";
 import AddButtonComponent from "../add-button/add-button.component";
+import EditButtonComponent from "../edit-button/edit-button.component";
 import EnhancedTable from "../data-table/data.table.component";
 import SimplePaper from "../results-block/results.block.component";
 
@@ -36,6 +37,13 @@ const AppGridComponent = ({ appData, leftDrawerClose }) => {
 
   const classes = useStyles();
 
+  // Conditionaly display edit or add button
+  const displayButton = appData.appReducer.editMode ? (
+    <EditButtonComponent />
+  ) : (
+    <AddButtonComponent />
+  );
+
   const displayData = appData.appReducer.appHasData ? (
     <Grid container spacing={3}>
       <Grid item xs={12}>
@@ -45,10 +53,10 @@ const AppGridComponent = ({ appData, leftDrawerClose }) => {
         <BasicTextFields {...appData} />
       </Grid>
       <Grid onClick={handleClick} item xs={12}>
-        <AddButtonComponent />
+        {displayButton}
       </Grid>
       <Grid item xs={12}>
-        <EnhancedTable {...appData} />
+        <EnhancedTable />
       </Grid>
     </Grid>
   ) : (

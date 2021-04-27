@@ -1,7 +1,8 @@
 import {
   GET_VOLUME_DATA,
   CHANGE_APP_LANGUAGE,
-  LEFT_DRAWER_CLOSE
+  LEFT_DRAWER_CLOSE,
+  ADD_OR_EDIT_MODE
 } from "./app-reducer.types";
 
 import { createVolumeData } from "./app-reducer.utils";
@@ -18,5 +19,10 @@ export const changeAppLanguage = (selectedLanguage) => ({
 
 export const leftDrawerClose = (value) => ({
   type: LEFT_DRAWER_CLOSE,
+  payload: value
+});
+
+export const addOrEdit = (value) => ({
+  type: ADD_OR_EDIT_MODE,
   payload: value
 });

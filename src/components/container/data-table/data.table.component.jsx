@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { lighten, makeStyles } from "@material-ui/core/styles";
@@ -17,6 +18,8 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+
+import { addOrEdit } from "../../../redux/app-reducer/app-reducer.actions";
 
 // Declare array which will contaigne positions to delete from data array
 let indexesToDelete = [];
@@ -302,7 +305,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function EnhancedTable({ ...appData }) {
+const AppGridComponent = ({ appData, addOrEdit }) => {
   takeAppData(appData);
   takeAppLanguage(appData);
 
@@ -351,6 +354,8 @@ export default function EnhancedTable({ ...appData }) {
     // Add all selected elements to the array
     indexesToDelete = newSelected;
     console.log(selectedIndex); // value of 0 will unselect all items from the table
+    //console.log(newSelected.length); // value of 0 will unselect all items from the table
+    newSelected.length === 1 ? addOrEdit(true) : addOrEdit(false);
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -428,4 +433,18 @@ export default function EnhancedTable({ ...appData }) {
       </Paper>
     </div>
   );
-}
+};
+
+const mapStateToProps = (state) => {
+  return {
+    appData: { ...state }
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addOrEdit: (item) => dispatch(addOrEdit(item))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppGridComponent);

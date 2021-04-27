@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
 
 const PersistentDrawerLeft = ({ appData, leftDrawerClose }) => {
   const selectedLanguage = appData.appReducer.appLanguage;
-  const drawerStatus = appData.appReducer.clickAway;
+  const drawerStatus = appData.appReducer.appDrawer;
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(drawerStatus);
