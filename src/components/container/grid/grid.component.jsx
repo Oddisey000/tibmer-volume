@@ -10,7 +10,10 @@ import SimplePaper from "../results-block/results.block.component";
 
 // Import data and redux functions
 import { volumeDataStandard, VolumeDataISO } from "../../shared/data";
-import { getVolumeData } from "../../../redux/app-reducer/app-reducer.actions";
+import {
+  getVolumeData,
+  leftDrawerClose
+} from "../../../redux/app-reducer/app-reducer.actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,12 +27,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-// When user click away (usualy near the + button) this will unselect all the items inside table
-const handleClick = () => {
-  console.log("onClickOutside() method called");
-};
+const AppGridComponent = ({ appData, leftDrawerClose }) => {
+  // When user click away (usualy near the + button) this will unselect all the items inside table
+  const handleClick = () => {
+    //console.log("onClickOutside() method called");
+    leftDrawerClose(false);
+  };
 
-const AppGridComponent = ({ appData }) => {
   const classes = useStyles();
 
   const displayData = appData.appReducer.appHasData ? (
@@ -38,19 +42,19 @@ const AppGridComponent = ({ appData }) => {
         <SimplePaper />
       </Grid>
       <Grid item xs={12}>
-        <BasicTextFields { ...appData } />
+        <BasicTextFields {...appData} />
       </Grid>
       <Grid onClick={handleClick} item xs={12}>
         <AddButtonComponent />
       </Grid>
       <Grid item xs={12}>
-        <EnhancedTable { ...appData } />
+        <EnhancedTable {...appData} />
       </Grid>
     </Grid>
   ) : (
     <Grid container spacing={3}>
       <Grid item xs={12}>
-        <BasicTextFields { ...appData } />
+        <BasicTextFields {...appData} />
       </Grid>
       <Grid onClick={handleClick} item xs={12}>
         <AddButtonComponent />
@@ -69,7 +73,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getVolumeData: dispatch(getVolumeData(volumeDataStandard, VolumeDataISO))
+    getVolumeData: dispatch(getVolumeData(volumeDataStandard, VolumeDataISO)),
+    leftDrawerClose: (item) => dispatch(leftDrawerClose(item))
   };
 };
 

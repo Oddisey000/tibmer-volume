@@ -1,5 +1,9 @@
 import INITIAL_STATE from "../root.state";
-import { GET_VOLUME_DATA, CHANGE_APP_LANGUAGE } from "./app-reducer.types";
+import {
+  GET_VOLUME_DATA,
+  CHANGE_APP_LANGUAGE,
+  LEFT_DRAWER_CLOSE
+} from "./app-reducer.types";
 
 const appReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -12,6 +16,11 @@ const appReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         appLanguage: action.payload
+      };
+    case LEFT_DRAWER_CLOSE:
+      return {
+        ...state,
+        clickAway: action.payload
       };
     default:
       return state;

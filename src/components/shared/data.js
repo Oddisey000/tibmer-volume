@@ -6776,14 +6776,14 @@ export const VolumeDataISO = {};
 export const languages = {
   english: {
     main: {
-      diametr: 'Diametr cm',
+      diametr: 'Diameter cm',
       length: 'Length m',
       quantity: 'Quantity',
       price: 'Price'
     },
     calculation: {
       title: 'Calculation',
-      diametr: 'Diametr',
+      diametr: 'Diameter',
       length: 'Length',
       quantity: 'Quantity',
       volume: 'm3',

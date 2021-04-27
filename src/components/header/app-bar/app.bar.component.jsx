@@ -21,6 +21,7 @@ import MailIcon from "@material-ui/icons/Mail";
 import BackspaceIcon from "@material-ui/icons/Backspace";
 
 import CalculationTypes from "../calculation-types/calculation.types.component";
+import { leftDrawerClose } from "../../../redux/app-reducer/app-reducer.actions";
 
 const drawerWidth = 240;
 
@@ -81,18 +82,21 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const PersistentDrawerLeft = ({ appData }) => {
+const PersistentDrawerLeft = ({ appData, leftDrawerClose }) => {
   const selectedLanguage = appData.appReducer.appLanguage;
+  const drawerStatus = appData.appReducer.clickAway;
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(drawerStatus);
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    leftDrawerClose(true);
+    setOpen(drawerStatus ? true : true);
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    leftDrawerClose(false);
+    setOpen(drawerStatus ? false : false);
   };
 
   return (
@@ -101,7 +105,7 @@ const PersistentDrawerLeft = ({ appData }) => {
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
-          [classes.appBarShift]: open
+          [classes.appBarShift]: drawerStatus
         })}
       >
         <Toolbar>
@@ -110,7 +114,7 @@ const PersistentDrawerLeft = ({ appData }) => {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
+            className={clsx(classes.menuButton, drawerStatus && classes.hide)}
           >
             <MenuIcon />
           </IconButton>
@@ -123,7 +127,7 @@ const PersistentDrawerLeft = ({ appData }) => {
         className={classes.drawer}
         variant="persistent"
         anchor="left"
-        open={open}
+        open={drawerStatus}
         classes={{
           paper: classes.drawerPaper
         }}
@@ -142,7 +146,7 @@ const PersistentDrawerLeft = ({ appData }) => {
       </Drawer>
       <main
         className={clsx(classes.content, {
-          [classes.contentShift]: open
+          [classes.contentShift]: drawerStatus
         })}
       >
         <div className={classes.drawerHeader} />
@@ -157,4 +161,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(PersistentDrawerLeft);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    leftDrawerClose: (item) => dispatch(leftDrawerClose(item))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PersistentDrawerLeft);
