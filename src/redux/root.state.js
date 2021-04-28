@@ -1,4 +1,4 @@
-import { languages } from "../components/shared/data";
+import { languages, volumeData } from "../components/shared/data";
 
 const INITIAL_STATE = {
   appLanguage: "ukrainian",
@@ -23,7 +23,10 @@ const INITIAL_STATE = {
   calculatedResults: [],
   // Big global object of data
   volumeData: {
-    timberVolume: {},
+    timberVolume: {
+      volumeDataStandard: volumeData.volumeDataStandard,
+      VolumeDataISO: volumeData.VolumeDataISO
+    },
     boardVolume: {}
   }
 };

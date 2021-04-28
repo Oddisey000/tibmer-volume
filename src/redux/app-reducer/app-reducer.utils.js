@@ -33,13 +33,3 @@ export const createTimberVolumeData = (
   // Testing
   return calculatedResults;
 };
-
-// Return saved constants from data.js to global state database
-export const createVolumeData = (volumeDataStandard, VolumeDataISO) => {
-  return {
-    timberVolume: {
-      volumeDataStandard: volumeDataStandard,
-      VolumeDataISO: VolumeDataISO
-    }
-  };
-};

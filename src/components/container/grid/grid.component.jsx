@@ -9,13 +9,6 @@ import EditButtonComponent from "../edit-button/edit-button.component";
 import EnhancedTable from "../data-table/data.table.component";
 import SimplePaper from "../results-block/results.block.component";
 
-// Import data and redux functions
-import { volumeDataStandard, VolumeDataISO } from "../../shared/data";
-import {
-  getVolumeData,
-  leftDrawerClose
-} from "../../../redux/app-reducer/app-reducer.actions";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -28,11 +21,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const AppGridComponent = ({ appData, leftDrawerClose }) => {
+const AppGridComponent = ({ appData }) => {
   // When user click away (usualy near the + button) this will unselect all the items inside table
   const handleClick = () => {
     //console.log("onClickOutside() method called");
-    leftDrawerClose(false);
   };
 
   const classes = useStyles();
@@ -79,11 +71,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getVolumeData: dispatch(getVolumeData(volumeDataStandard, VolumeDataISO)),
-    leftDrawerClose: (item) => dispatch(leftDrawerClose(item))
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AppGridComponent);
+export default connect(mapStateToProps)(AppGridComponent);
