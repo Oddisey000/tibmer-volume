@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import Badge from "@material-ui/core/Badge";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
@@ -24,7 +25,7 @@ const StyledBadge = withStyles((theme) => ({
   }
 }))(Badge);
 
-export default function AddButtonComponent() {
+const AddButtonComponent = () => {
   const classes = useStyles();
 
   // Conditionaly apply budge icon
@@ -46,4 +47,12 @@ export default function AddButtonComponent() {
       </Fab>
     </div>
   );
-}
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    //leftDrawerClose: (item) => dispatch(leftDrawerClose(item))
+  };
+};
+
+export default connect(null, mapDispatchToProps)(AddButtonComponent);

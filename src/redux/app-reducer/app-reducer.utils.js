@@ -1,9 +1,5 @@
 // Create or update existing array of user's data
-export const createTimberVolumeData = (
-  userDataObj,
-  calculatedResults,
-  timberVolumeData
-) => {
+export const createTimberVolumeData = (userDataObj, calculatedResults) => {
   // Check next id item position
   const existingDataArrSize = calculatedResults.length
     ? calculatedResults.length + 1

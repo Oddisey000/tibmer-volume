@@ -17,7 +17,7 @@ const INITIAL_STATE = {
     }
   },
   editMode: false,
-  clickAway: false,
+  clickAway: true,
   appDrawer: false,
   appHasData: false,
   calculatedResults: [],
