@@ -42,7 +42,7 @@ const AppGridComponent = ({ appData }) => {
         <SimplePaper />
       </Grid>
       <Grid item xs={12}>
-        <BasicTextFields {...appData} />
+        <BasicTextFields />
       </Grid>
       <Grid onClick={handleClick} item xs={12}>
         {displayButton}
@@ -54,7 +54,7 @@ const AppGridComponent = ({ appData }) => {
   ) : (
     <Grid container spacing={3}>
       <Grid item xs={12}>
-        <BasicTextFields {...appData} />
+        <BasicTextFields />
       </Grid>
       <Grid onClick={handleClick} item xs={12}>
         <AddButtonComponent />
@@ -67,7 +67,7 @@ const AppGridComponent = ({ appData }) => {
 
 const mapStateToProps = (state) => {
   return {
-    appData: state
+    appData: { ...state }
   };
 };
 

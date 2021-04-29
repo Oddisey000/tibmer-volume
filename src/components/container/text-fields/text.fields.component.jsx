@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 
@@ -12,37 +13,27 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-let dataObj = {};
-
-export default function BasicTextFields({ ...appData }) {
+const BasicTextFields = ({ appData }) => {
   const selectedLanguage = appData.appReducer.appLanguage;
 
   const classes = useStyles();
 
-  const createDataObj = (property, dataObjdata) => {
-    if (dataObjdata) {
-      dataObj[property] = parseFloat(dataObjdata);
-    } else {
-      delete dataObj[property];
-    }
-  };
+  //console.log(appData);
 
+  // Checks if user insert correct data into text field and clean when data is incorrect
   const checkIfNum = (e) => {
     if (e.target.placeholder) {
       e.target.value =
+        // Check if there is a number and if it not bigger then maximum allowed
         e.target.value <= parseFloat(e.target.placeholder)
-          ? parseFloat(e.target.value)
-          : null;
-      createDataObj(e.target.id, e.target.value);
+          ? // Insert this value into text field
+            parseFloat(e.target.value)
+          : // Clean text field if user insert incorrect data
+            null;
     } else {
+      // If there is no maximum allowed number to insert check if user insert number value
       e.target.value = isNaN ? parseFloat(e.target.value) : null;
-      createDataObj(e.target.id, e.target.value);
     }
-    //console.log(e.target.id);
-    //console.log(Object.keys(dataObj).length);
-
-    console.log(Object.keys(dataObj).length);
-    console.log(dataObj);
   };
 
   return (
@@ -77,4 +68,12 @@ export default function BasicTextFields({ ...appData }) {
       />
     </form>
   );
-}
+};
+
+const mapStateToProps = (state) => {
+  return {
+    appData: { ...state }
+  };
+};
+
+export default connect(mapStateToProps)(BasicTextFields);

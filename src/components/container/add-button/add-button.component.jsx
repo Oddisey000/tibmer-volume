@@ -25,23 +25,53 @@ const StyledBadge = withStyles((theme) => ({
   }
 }))(Badge);
 
+let dataObj = {};
+
 const AddButtonComponent = () => {
   const classes = useStyles();
+
+  // React if user select and press enter key to react
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      createVolumeDataObj();
+    }
+  };
+
+  // Fill in data object with data for specific property
+  const createVolumeDataObj = () => {
+    const timberDiametr = document.getElementById("diameter").value;
+    const timberLength = document.getElementById("length").value;
+    const timberQuantity = document.getElementById("quantity").value;
+    const timberPrice = document.getElementById("price").value;
+
+    if (timberDiametr && timberLength && timberQuantity && timberPrice) {
+      dataObj["diameter"] = timberDiametr;
+      dataObj["length"] = timberLength;
+      dataObj["quantity"] = timberQuantity;
+      dataObj["price"] = timberPrice;
+      console.log(dataObj);
+    }
+  };
 
   // Conditionaly apply budge icon
   const insertedData = 13; // You need to use data from state
   const displayBudge = insertedData ? (
-    <StyledBadge badgeContent={insertedData} max={999} color="secondary">
+    <StyledBadge
+      badgeContent={insertedData}
+      max={999}
+      color="secondary"
+      onClick={createVolumeDataObj}
+    >
       <AddIcon />
     </StyledBadge>
   ) : (
-    <StyledBadge max={999} color="secondary">
+    <StyledBadge max={999} color="secondary" onClick={createVolumeDataObj}>
       <AddIcon />
     </StyledBadge>
   );
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} onKeyDown={handleKeyPress}>
       <Fab color="primary" aria-label="add">
         {displayBudge}
       </Fab>
@@ -51,7 +81,7 @@ const AddButtonComponent = () => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    //leftDrawerClose: (item) => dispatch(leftDrawerClose(item))
+    //volumeInsertedData: (item) => dispatch(volumeInsertedData(item))
   };
 };
 
