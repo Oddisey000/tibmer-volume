@@ -30,13 +30,6 @@ let dataObj = {};
 const AddButtonComponent = () => {
   const classes = useStyles();
 
-  // React if user select and press enter key to react
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      createVolumeDataObj();
-    }
-  };
-
   // Fill in data object with data for specific property
   const createVolumeDataObj = () => {
     const timberDiametr = document.getElementById("diameter").value;
@@ -56,23 +49,18 @@ const AddButtonComponent = () => {
   // Conditionaly apply budge icon
   const insertedData = 13; // You need to use data from state
   const displayBudge = insertedData ? (
-    <StyledBadge
-      badgeContent={insertedData}
-      max={999}
-      color="secondary"
-      onClick={createVolumeDataObj}
-    >
+    <StyledBadge badgeContent={insertedData} max={999} color="secondary">
       <AddIcon />
     </StyledBadge>
   ) : (
-    <StyledBadge max={999} color="secondary" onClick={createVolumeDataObj}>
+    <StyledBadge max={999} color="secondary">
       <AddIcon />
     </StyledBadge>
   );
 
   return (
-    <div className={classes.root} onKeyDown={handleKeyPress}>
-      <Fab color="primary" aria-label="add">
+    <div className={classes.root}>
+      <Fab color="primary" aria-label="add" onClick={createVolumeDataObj}>
         {displayBudge}
       </Fab>
     </div>
