@@ -39,7 +39,7 @@ function createData(id, diametr, length, quantity, volume, price) {
   return { id, diametr, length, quantity, volume, price };
 }
 
-const rows = [
+const rows = [ 
   createData(0, 25, 305, 3.7, 67, 4.3),
   createData(1, 25, 305, 3.7, 67, 4.3),
   createData(2, 25, 305, 3.7, 67, 4.3),

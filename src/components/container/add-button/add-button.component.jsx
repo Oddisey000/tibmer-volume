@@ -5,6 +5,8 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 
+import { createTimberVolumeData } from "../../../redux/app-reducer/app-reducer.actions";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -25,9 +27,9 @@ const StyledBadge = withStyles((theme) => ({
   }
 }))(Badge);
 
-let dataObj = {};
+let dataObj = {}; // Need for sending data to state
 
-const AddButtonComponent = () => {
+const AddButtonComponent = ({ appData, createTimberVolumeData }) => {
   const classes = useStyles();
 
   // Fill in data object with data for specific property
@@ -42,7 +44,16 @@ const AddButtonComponent = () => {
       dataObj["length"] = timberLength;
       dataObj["quantity"] = timberQuantity;
       dataObj["price"] = timberPrice;
-      console.log(dataObj);
+      //console.log(dataObj);
+      document.getElementById("diameter").value = null;
+      document.getElementById("diameter").focus();
+
+      createTimberVolumeData(
+        dataObj,
+        appData.appReducer.calculatedResults,
+        appData.appReducer.volumeData.timberVolume.volumeDataStandard
+      );
+      console.log(appData.appReducer);
     }
   };
 
@@ -67,10 +78,17 @@ const AddButtonComponent = () => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    //volumeInsertedData: (item) => dispatch(volumeInsertedData(item))
+    appData: { ...state }
   };
 };
 
-export default connect(null, mapDispatchToProps)(AddButtonComponent);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createTimberVolumeData: (item, item2, item3) =>
+      dispatch(createTimberVolumeData(item, item2, item3))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddButtonComponent);
