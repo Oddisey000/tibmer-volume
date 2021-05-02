@@ -25,13 +25,13 @@ export const createTimberVolumeDataObj = (
   };
 
   // Check if calculated results object already have data
-  if (culculatedResultData > 0) {
+  //if (culculatedResultData > 0) {
     // If it has data then id number should next one after length parameter
-    createfixedUserDataObj(culculatedResultData + 1);
-  } else {
-    // If there is no data then id should start from 0
     createfixedUserDataObj(culculatedResultData);
-  }
+  //} else {
+    // If there is no data then id should start from 0
+    //createfixedUserDataObj(culculatedResultData);
+  //}
 
   function createfixedUserDataObj(idValue) {
     const fixedUserDataObj = {
@@ -61,6 +61,31 @@ export const createTimberVolumeDataObj = (
         price: calculatedResultsArr.length === 1
           ? calculatedResultsArr[0].price
           : calculatedResultsArr.map((item) => (item.price)).reduce((a, b) => a + b)
+      }
+  };
+};
+
+// Delete from data table
+export const deleteFromArrByIndexes = (dataArray, indexesToDelete) => {
+  // A variable wich need to be returned in the end of the function
+  let calculatedData = {
+    calculatedResults: [],
+    calculatedSummary: {}
+  };
+
+  dataArray = dataArray.filter(function(value, index) {
+    return indexesToDelete.indexOf(index) == -1;
+  });
+
+  return calculatedData = {
+    calculatedResults: dataArray,
+      calculatedSummary: {
+        volume: dataArray.length
+          ? dataArray.map((item) => (item.volume)).reduce((a, b) => a + b)
+          : null,
+        price: dataArray.length
+          ? dataArray.map((item) => (item.price)).reduce((a, b) => a + b)
+          : null
       }
   };
 };

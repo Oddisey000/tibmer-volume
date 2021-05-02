@@ -19,7 +19,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 
-import { addOrEdit } from "../../../redux/app-reducer/app-reducer.actions";
+import { addOrEdit, setTableSelectedElements, deleteItemsFromTable } from "../../../redux/app-reducer/app-reducer.actions";
 
 // Declare array which will contaigne positions to delete from data array
 let indexesToDelete = [];
@@ -172,11 +172,14 @@ const EnhancedTableToolbar = (props) => {
   };
 
   const classes = useToolbarStyles();
-  const { numSelected } = props;
+  const { numSelected, deleteItemsFromTable } = props;
 
   // Handle deletion of array element
   const handleDelete = () => {
     // indexesToDelete.map((element) => rows.splice(element, 1));
+    deleteItemsFromTable(appDataVar.appReducer.calculatedData.calculatedResults, appDataVar.appReducer.setTableSelectedElements);
+    //console.log(appDataVar.appReducer.setTableSelectedElements);
+    //console.log(appDataVar.appReducer.setTableSelectedElements);
   };
 
   return (
@@ -185,7 +188,7 @@ const EnhancedTableToolbar = (props) => {
         [classes.highlight]: numSelected > 0
       })}
     >
-      {numSelected === 1 ? (
+      {/*numSelected === 1 ? (
         <Tooltip
           title={
             appDataVar.appReducer.languages[selectedLanguage].calculation
@@ -199,11 +202,11 @@ const EnhancedTableToolbar = (props) => {
             }
           >
             <EditIcon />
-          </IconButton>
+          </IconButton>}
         </Tooltip>
       ) : (
         <div></div>
-      )}
+      )*/}
       {numSelected > 0 ? (
         <Typography
           className={classes.title}
@@ -285,9 +288,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const AppGridComponent = ({ appData, addOrEdit }) => {
+const AppGridComponent = ({ appData, addOrEdit, setTableSelectedElements, deleteItemsFromTable }) => {
   takeAppData(appData);
   takeAppLanguage(appData);
+
+  const setTableSelected = (item) => {
+    setTableSelectedElements(item);
+    //console.log(item);
+  }
 
   const rows = appData.appReducer.calculatedData.calculatedResults
   ? appData.appReducer.calculatedData.calculatedResults
@@ -300,6 +308,8 @@ const AppGridComponent = ({ appData, addOrEdit }) => {
   const [page] = React.useState(0);
   const [rowsPerPage] = React.useState(5);
 
+  //if (appData.appReducer.clickAway) (setSelected([]));
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -310,11 +320,12 @@ const AppGridComponent = ({ appData, addOrEdit }) => {
     if (event.target.checked) {
       const newSelecteds = rows.map((n) => n.id);
       setSelected(newSelecteds);
-      // Add all selected elements to the array
-      indexesToDelete = newSelecteds;
+      setTableSelected(newSelecteds);
       return;
     }
-    setSelected([]);
+    addOrEdit(false);
+    setSelected([]);    
+    setTableSelected([]);
   };
 
   const handleClick = (event, name) => {
@@ -335,10 +346,10 @@ const AppGridComponent = ({ appData, addOrEdit }) => {
     }
 
     setSelected(newSelected);
-    // Add all selected elements to the array
-    indexesToDelete = newSelected;
-    console.log(selectedIndex); // value of 0 will unselect all items from the table
+    setTableSelected(newSelected);
+    //console.log(selectedIndex); // value of 0 will unselect all items from the table
     //console.log(newSelected.length); // value of 0 will unselect all items from the table
+    if (!newSelected) (addOrEdit(false));
     newSelected.length === 1 ? addOrEdit(true) : addOrEdit(false);
   };
 
@@ -350,7 +361,7 @@ const AppGridComponent = ({ appData, addOrEdit }) => {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} deleteItemsFromTable={deleteItemsFromTable} />
         <TableContainer className={classes.tableHeigth}>
           <Table
             stickyHeader
@@ -427,7 +438,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addOrEdit: (item) => dispatch(addOrEdit(item))
+    addOrEdit: (item) => dispatch(addOrEdit(item)),
+    setTableSelectedElements: (dataArr) => dispatch(setTableSelectedElements(dataArr)),
+    deleteItemsFromTable: (dataArray, indexesToDelete) => dispatch(deleteItemsFromTable(dataArray, indexesToDelete))
   };
 };
 

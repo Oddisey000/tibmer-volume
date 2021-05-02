@@ -4,9 +4,10 @@ import {
   ADD_OR_EDIT_MODE,
   ADD_CALCULATED_DATA,
   ENABLE_DISPLAY_RESULTS,
-  MAKE_CALC_SUMMARY
+  SET_TABLE_SELECTED_ELEMENTS,
+  DELETE_ITEMS
 } from "./app-reducer.types";
-import { createTimberVolumeDataObj } from "./app-reducer.utils";
+import { createTimberVolumeDataObj, deleteFromArrByIndexes } from "./app-reducer.utils";
 
 export const changeAppLanguage = (selectedLanguage) => ({
   type: CHANGE_APP_LANGUAGE,
@@ -41,7 +42,12 @@ export const displayCalculation = (condition) => ({
   payload: condition
 });
 
-export const makeCalcSummary = (dataObj) => ({
-  type: MAKE_CALC_SUMMARY,
-  payload: dataObj
+export const setTableSelectedElements = (dataArr) => ({
+  type: SET_TABLE_SELECTED_ELEMENTS,
+  payload: dataArr
+});
+
+export const deleteItemsFromTable = (dataArray, indexesToDelete) => ({
+  type: DELETE_ITEMS,
+  payload: deleteFromArrByIndexes(dataArray, indexesToDelete)
 });

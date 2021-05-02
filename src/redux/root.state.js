@@ -17,7 +17,7 @@ const INITIAL_STATE = {
     }
   },
   editMode: false,
-  clickAway: true,
+  setTableSelectedElements: [],
   appDrawer: false,
   appHasData: false,
   calculatedData: {

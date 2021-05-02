@@ -9,6 +9,8 @@ import EditButtonComponent from "../edit-button/edit-button.component";
 import EnhancedTable from "../data-table/data.table.component";
 import SimplePaper from "../results-block/results.block.component";
 
+//import { setTableSelectedElements } from "../../../redux/app-reducer/app-reducer.actions";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -24,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 const AppGridComponent = ({ appData }) => {
   // When user click away (usualy near the + button) this will unselect all the items inside table
   const handleClick = () => {
-    //console.log("onClickOutside() method called");
+    //setTableSelectedElements([]);
   };
 
   const classes = useStyles();
@@ -36,7 +38,7 @@ const AppGridComponent = ({ appData }) => {
     <AddButtonComponent />
   );
   const displayResults = appData.appReducer.appHasData ? (
-    <Grid item xs={12}>
+    <Grid onClick={handleClick} item xs={12}>
         <SimplePaper { ...appData } />
     </Grid>
   ) : (
@@ -53,10 +55,10 @@ const AppGridComponent = ({ appData }) => {
   const displayData = (
     <Grid container spacing={3}>
       {displayResults}
-      <Grid item xs={12}>
+      <Grid item xs={12} onClick={handleClick}>
         <BasicTextFields />
       </Grid>
-      <Grid onClick={handleClick} item xs={12}>
+      <Grid item xs={12} onClick={handleClick}>
         {displayButton}
       </Grid>
         {displayDataTable}
@@ -71,5 +73,11 @@ const mapStateToProps = (state) => {
     appData: { ...state }
   };
 };
+
+/*const mapDispatchToProps = (dispatch) => {
+  return {
+    setTableSelectedElements: (emptyArray) => dispatch(setTableSelectedElements(emptyArray))
+  };
+};*/
 
 export default connect(mapStateToProps)(AppGridComponent);

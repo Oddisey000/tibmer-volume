@@ -5,7 +5,8 @@ import {
   ADD_OR_EDIT_MODE,
   ADD_CALCULATED_DATA,
   ENABLE_DISPLAY_RESULTS,
-  MAKE_CALC_SUMMARY
+  SET_TABLE_SELECTED_ELEMENTS,
+  DELETE_ITEMS
 } from "./app-reducer.types";
 
 const appReducer = (state = INITIAL_STATE, action) => {
@@ -35,11 +36,16 @@ const appReducer = (state = INITIAL_STATE, action) => {
         ...state,
         appHasData: action.payload
       };
-    case MAKE_CALC_SUMMARY:
+    case SET_TABLE_SELECTED_ELEMENTS:
       return {
         ...state,
-        calculatedSummary: action.payload
+        setTableSelectedElements: action.payload
       };
+    case DELETE_ITEMS:
+      return {
+        ...state,
+        calculatedData: action.payload
+      }
     default:
       return state;
   }

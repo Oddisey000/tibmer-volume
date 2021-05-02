@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SimplePaper({...appData}) {
-  console.log(appData.appReducer.calculatedData);
   const classes = useStyles();
 
   return (
