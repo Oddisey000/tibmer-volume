@@ -35,26 +35,6 @@ const takeAppLanguage = (appData) => {
   return (selectedLanguage = appData.appReducer.appLanguage);
 };
 
-function createData(id, diametr, length, quantity, volume, price) {
-  return { id, diametr, length, quantity, volume, price };
-}
-
-const rows = [ 
-  createData(0, 25, 305, 3.7, 67, 4.3),
-  createData(1, 25, 305, 3.7, 67, 4.3),
-  createData(2, 25, 305, 3.7, 67, 4.3),
-  createData(3, 25, 305, 3.7, 67, 4.3),
-  createData(4, 25, 305, 3.7, 67, 4.3),
-  createData(5, 25, 305, 3.7, 67, 4.3),
-  createData(6, 25, 305, 3.7, 67, 4.3),
-  createData(7, 25, 305, 3.7, 67, 4.3),
-  createData(8, 25, 305, 3.7, 67, 4.3),
-  createData(9, 25, 305, 3.7, 67, 4.3),
-  createData(10, 25, 305, 3.7, 67, 4.3),
-  createData(11, 25, 305, 3.7, 67, 4.3),
-  createData(12, 25, 305, 3.7, 67, 4.3)
-];
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -308,6 +288,10 @@ const useStyles = makeStyles((theme) => ({
 const AppGridComponent = ({ appData, addOrEdit }) => {
   takeAppData(appData);
   takeAppLanguage(appData);
+
+  const rows = appData.appReducer.calculatedData.calculatedResults
+  ? appData.appReducer.calculatedData.calculatedResults
+  : [];
 
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");

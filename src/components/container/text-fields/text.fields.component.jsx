@@ -18,8 +18,6 @@ const BasicTextFields = ({ appData }) => {
 
   const classes = useStyles();
 
-  console.log(appData.appReducer.calculatedResults);
-
   // Checks if user insert correct data into text field and clean when data is incorrect
   const checkIfNum = (e) => {
     if (e.target.placeholder) {
@@ -43,20 +41,20 @@ const BasicTextFields = ({ appData }) => {
         id="price"
         label={appData.appReducer.languages[selectedLanguage].main.price}
         variant="outlined"
-        onBlur={checkIfNum}
+        onChange={checkIfNum}
+      />
+      <TextField
+        type="number"
+        id="quantity"
+        label={appData.appReducer.languages[selectedLanguage].main.quantity}
+        onChange={checkIfNum}
       />
       <TextField
         placeholder="9.5 max"
         type="number"
         id="length"
         label={appData.appReducer.languages[selectedLanguage].main.length}
-        onBlur={checkIfNum}
-      />
-      <TextField
-        type="number"
-        id="quantity"
-        label={appData.appReducer.languages[selectedLanguage].main.quantity}
-        onBlur={checkIfNum}
+        onChange={checkIfNum}
       />
       <TextField
         placeholder="120 max"
@@ -64,7 +62,7 @@ const BasicTextFields = ({ appData }) => {
         pattern="[0-9]"
         id="diameter"
         label={appData.appReducer.languages[selectedLanguage].main.diametr}
-        onBlur={checkIfNum}
+        onChange={checkIfNum}
       />
     </form>
   );

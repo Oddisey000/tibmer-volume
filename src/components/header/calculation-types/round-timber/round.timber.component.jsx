@@ -44,11 +44,11 @@ export default function RoundTimberComponent({ ...appData }) {
           control={<Radio color="primary" />}
           label="ГОСТ 2708-75"
         />
-        <FormControlLabel
+        {/*<FormControlLabel
           value="iso"
           control={<Radio color="primary" />}
           label="ISO 4480-83"
-        />
+        />*/}
       </RadioGroup>
     </FormControl>
   );

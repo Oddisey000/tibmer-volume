@@ -2,7 +2,9 @@ import {
   CHANGE_APP_LANGUAGE,
   LEFT_DRAWER_CLOSE,
   ADD_OR_EDIT_MODE,
-  ADD_CALCULATED_DATA
+  ADD_CALCULATED_DATA,
+  ENABLE_DISPLAY_RESULTS,
+  MAKE_CALC_SUMMARY
 } from "./app-reducer.types";
 import { createTimberVolumeDataObj } from "./app-reducer.utils";
 
@@ -32,4 +34,14 @@ export const createTimberVolumeData = (
     calculatedResults,
     volumeDataTable
   )
+});
+
+export const displayCalculation = (condition) => ({
+  type: ENABLE_DISPLAY_RESULTS,
+  payload: condition
+});
+
+export const makeCalcSummary = (dataObj) => ({
+  type: MAKE_CALC_SUMMARY,
+  payload: dataObj
 });

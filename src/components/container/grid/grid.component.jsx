@@ -35,30 +35,31 @@ const AppGridComponent = ({ appData }) => {
   ) : (
     <AddButtonComponent />
   );
-
-  const displayData = appData.appReducer.appHasData ? (
-    <Grid container spacing={3}>
-      <Grid item xs={12}>
-        <SimplePaper />
+  const displayResults = appData.appReducer.appHasData ? (
+    <Grid item xs={12}>
+        <SimplePaper { ...appData } />
+    </Grid>
+  ) : (
+    null
+  );
+  const displayDataTable = appData.appReducer.appHasData ? (
+    <Grid item xs={12}>
+        <EnhancedTable />
       </Grid>
+  ) : (
+    null
+  );
+
+  const displayData = (
+    <Grid container spacing={3}>
+      {displayResults}
       <Grid item xs={12}>
         <BasicTextFields />
       </Grid>
       <Grid onClick={handleClick} item xs={12}>
         {displayButton}
       </Grid>
-      <Grid item xs={12}>
-        <EnhancedTable />
-      </Grid>
-    </Grid>
-  ) : (
-    <Grid container spacing={3}>
-      <Grid item xs={12}>
-        <BasicTextFields />
-      </Grid>
-      <Grid onClick={handleClick} item xs={12}>
-        <AddButtonComponent />
-      </Grid>
+        {displayDataTable}
     </Grid>
   );
 

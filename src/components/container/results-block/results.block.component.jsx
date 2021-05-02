@@ -16,16 +16,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function SimplePaper() {
+export default function SimplePaper({...appData}) {
+  console.log(appData.appReducer.calculatedData);
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <Paper variant="outlined">
-        <p>м&sup3;</p>
+        <p>{Math.round(appData.appReducer.calculatedData.calculatedSummary.volume * 100) / 100} м&sup3;</p>
       </Paper>
       <Paper variant="outlined">
-        <p>&sum;</p>
+        <p>{Math.round(appData.appReducer.calculatedData.calculatedSummary.price)} &sum;</p>
       </Paper>
     </div>
   );

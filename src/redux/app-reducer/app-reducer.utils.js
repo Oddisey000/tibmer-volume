@@ -12,11 +12,17 @@ export const createTimberVolumeDataObj = (
       volumeDataTable[Math.round(userDataObj.length * 10) / 10];
 
   // Get timber volume data from the object
-  const timberVolume = volumeLength[Math.round(userDataObj.diameter)];
+  const timberVolume = volumeLength[Math.round(userDataObj.diameter)]
+    ? volumeLength[Math.round(userDataObj.diameter)]
+    : volumeLength[Math.round(userDataObj.diameter) - 1];
 
   // Check how much elements inside calculated results array
   const culculatedResultData = calculatedResults ? calculatedResults.length : 0;
   let calculatedResultsArr = calculatedResults ? calculatedResults : [];
+  let calculatedData = {
+    calculatedResults: [],
+    calculatedSummary: {}
+  };
 
   // Check if calculated results object already have data
   if (culculatedResultData > 0) {
@@ -30,9 +36,9 @@ export const createTimberVolumeDataObj = (
   function createfixedUserDataObj(idValue) {
     const fixedUserDataObj = {
       id: idValue,
-      diametr: Math.round(userDataObj.diameter),
-      length: parseFloat(userDataObj.length), // Need to be fixed like volumeLength variable
-      quantity: parseFloat(userDataObj.quantity),
+      diametr: userDataObj.diameter,
+      length: userDataObj.length,
+      quantity: userDataObj.quantity,
       volume: parseFloat(timberVolume),
       price:
         Math.round(
@@ -44,7 +50,17 @@ export const createTimberVolumeDataObj = (
   // A function wich gonna create object item
   function createData(fixedUserDataObj) {
     calculatedResultsArr.push(fixedUserDataObj);
-    return { calculatedResults };
+    return { calculatedResultsArr };
   }
-  return calculatedResultsArr;
+  return calculatedData = {
+    calculatedResults: calculatedResultsArr,
+      calculatedSummary: {
+        volume: calculatedResultsArr.length === 1
+          ? calculatedResultsArr[0].volume
+          : calculatedResultsArr.map((item) => (item.volume)).reduce((a, b) => a + b),
+        price: calculatedResultsArr.length === 1
+          ? calculatedResultsArr[0].price
+          : calculatedResultsArr.map((item) => (item.price)).reduce((a, b) => a + b)
+      }
+  };
 };

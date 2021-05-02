@@ -20,7 +20,10 @@ const INITIAL_STATE = {
   clickAway: true,
   appDrawer: false,
   appHasData: false,
-  calculatedResults: [],
+  calculatedData: {
+    calculatedResults: [],
+    calculatedSummary: {},
+  },
   // Big global object of data
   volumeData: {
     timberVolume: {

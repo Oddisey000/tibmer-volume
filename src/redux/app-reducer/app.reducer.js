@@ -3,7 +3,9 @@ import {
   CHANGE_APP_LANGUAGE,
   LEFT_DRAWER_CLOSE,
   ADD_OR_EDIT_MODE,
-  ADD_CALCULATED_DATA
+  ADD_CALCULATED_DATA,
+  ENABLE_DISPLAY_RESULTS,
+  MAKE_CALC_SUMMARY
 } from "./app-reducer.types";
 
 const appReducer = (state = INITIAL_STATE, action) => {
@@ -26,7 +28,17 @@ const appReducer = (state = INITIAL_STATE, action) => {
     case ADD_CALCULATED_DATA:
       return {
         ...state,
-        calculatedResults: action.payload
+        calculatedData: action.payload
+      };
+    case ENABLE_DISPLAY_RESULTS:
+      return {
+        ...state,
+        appHasData: action.payload
+      };
+    case MAKE_CALC_SUMMARY:
+      return {
+        ...state,
+        calculatedSummary: action.payload
       };
     default:
       return state;
