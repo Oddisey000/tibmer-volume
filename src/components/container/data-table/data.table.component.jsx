@@ -19,13 +19,14 @@ import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 
-import { addOrEdit, setTableSelectedElements, deleteItemsFromTable } from "../../../redux/app-reducer/app-reducer.actions";
+import { addOrEdit, setTableSelectedElements, deleteItemsFromTable, saveIndexToEdit } from "../../../redux/app-reducer/app-reducer.actions";
 
 // Declare array which will contaigne positions to delete from data array
 let indexesToDelete = [];
 let appDataVar;
 let selectedLanguage;
 let tableLabels;
+let rows;
 
 const takeAppData = (appData) => {
   return (appDataVar = appData);
@@ -102,9 +103,9 @@ function EnhancedTableHead(props) {
             }}
           />
         </TableCell>
-        {headCells.map((headCell) => (
+        {headCells.map((headCell, index) => (
           <TableCell
-            key={headCell.id}
+            key={index}
             align={headCell.numeric ? "right" : "left"}
             padding={headCell.disablePadding ? "none" : "default"}
             sortDirection={orderBy === headCell.id ? order : false}
@@ -172,89 +173,63 @@ const EnhancedTableToolbar = (props) => {
   };
 
   const classes = useToolbarStyles();
-  const { numSelected, deleteItemsFromTable } = props;
+  const { numSelected, deleteItemsFromTable, addOrEdit, setSelected } = props;
 
   // Handle deletion of array element
   const handleDelete = () => {
-    // indexesToDelete.map((element) => rows.splice(element, 1));
     deleteItemsFromTable(appDataVar.appReducer.calculatedData.calculatedResults, appDataVar.appReducer.setTableSelectedElements);
-    //console.log(appDataVar.appReducer.setTableSelectedElements);
-    //console.log(appDataVar.appReducer.setTableSelectedElements);
+    rows = appDataVar.appReducer.calculatedData.calculatedResults.length
+      ? appDataVar.appReducer.calculatedData.calculatedResults
+      : [];
+    addOrEdit(false);
+    setSelected([]);
   };
 
-  return (
-    <Toolbar
-      className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0
-      })}
-    >
-      {/*numSelected === 1 ? (
-        <Tooltip
-          title={
-            appDataVar.appReducer.languages[selectedLanguage].calculation
-              .changeSelected
-          }
-        >
-          <IconButton
-            aria-label={
-              appDataVar.appReducer.languages[selectedLanguage].calculation
-                .changeSelected
-            }
-          >
-            <EditIcon />
-          </IconButton>}
-        </Tooltip>
-      ) : (
-        <div></div>
-      )*/}
-      {numSelected > 0 ? (
-        <Typography
-          className={classes.title}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected}{" "}
-          {
-            appDataVar.appReducer.languages[selectedLanguage].calculation
-              .numSelected
-          }
-        </Typography>
-      ) : (
-        <Typography
-          className={classes.title}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          {appDataVar.appReducer.languages[selectedLanguage].calculation.title}
-        </Typography>
-      )}
+  return (    
+  <Toolbar
+    className={clsx(classes.root, {
+      [classes.highlight]: numSelected > 0
+    })}
+  >
+    {numSelected > 0 ? (
+      <Typography
+        className={classes.title}
+        color="inherit"
+        variant="subtitle1"
+        component="div"
+      >
+        {numSelected}{" "}
+        {
+          appDataVar.appReducer.languages[selectedLanguage].calculation
+            .numSelected
+        }
+      </Typography>
+    ) : (
+      <Typography
+        className={classes.title}
+        variant="h6"
+        id="tableTitle"
+        component="div"
+      >
+        {appDataVar.appReducer.languages[selectedLanguage].calculation.title}
+      </Typography>
+    )}
 
-      {numSelected > 0 ? (
-        <Tooltip
-          title={
+    {numSelected > 0 ? (
+        <IconButton
+          onClick={handleDelete}
+          aria-label={
             appDataVar.appReducer.languages[selectedLanguage].calculation
               .deleteItems
           }
         >
-          <IconButton
-            onClick={handleDelete}
-            aria-label={
-              appDataVar.appReducer.languages[selectedLanguage].calculation
-                .deleteItems
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <div></div>
-        </Tooltip>
-      )}
-    </Toolbar>
-  );
+          <DeleteIcon />
+        </IconButton>
+    ) : (
+      <div></div>
+    )}
+  </Toolbar>
+);
 };
 
 EnhancedTableToolbar.propTypes = {
@@ -288,23 +263,45 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const AppGridComponent = ({ appData, addOrEdit, setTableSelectedElements, deleteItemsFromTable }) => {
+const AppGridComponent = ({ appData, addOrEdit, setTableSelectedElements, deleteItemsFromTable, saveIndexToEdit }) => {
   takeAppData(appData);
   takeAppLanguage(appData);
+
+  rows = appData.appReducer.calculatedData.calculatedResults.length
+    ? appData.appReducer.calculatedData.calculatedResults
+    : [];
+
+  const fillInInputs = (itemId) => {
+    if (itemId > -1) {
+      const elementToEdit = appData.appReducer.calculatedData.calculatedResults[itemId];
+
+      document.getElementById("diameter").value = elementToEdit.diametr;
+      document.getElementById("length").value = elementToEdit.length;
+      document.getElementById("quantity").value = elementToEdit.quantity;
+
+      saveIndexToEdit(itemId);
+    } else {
+      document.getElementById("diameter").value = null;
+      document.getElementById("length").value = null;
+      document.getElementById("quantity").value = null;
+    }
+  };
+
+  const clearInputs = () => {
+    document.getElementById("diameter").value = null;
+    document.getElementById("length").value = null;
+    document.getElementById("quantity").value = null;
+  };
 
   const setTableSelected = (item) => {
     setTableSelectedElements(item);
     //console.log(item);
   }
 
-  const rows = appData.appReducer.calculatedData.calculatedResults
-  ? appData.appReducer.calculatedData.calculatedResults
-  : [];
-
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
-  const [selected, setSelected] = React.useState([]);
+  const [selected, setSelected] = React.useState(appData.appReducer.setTableSelectedElements);
   const [page] = React.useState(0);
   const [rowsPerPage] = React.useState(5);
 
@@ -321,11 +318,22 @@ const AppGridComponent = ({ appData, addOrEdit, setTableSelectedElements, delete
       const newSelecteds = rows.map((n) => n.id);
       setSelected(newSelecteds);
       setTableSelected(newSelecteds);
+
+      document.getElementById("diameter").value = null;
+      document.getElementById("length").value = null;
+      document.getElementById("quantity").value = null;
+
+      addOrEdit(false);
+
       return;
     }
     addOrEdit(false);
     setSelected([]);    
     setTableSelected([]);
+
+    document.getElementById("diameter").value = null;
+    document.getElementById("length").value = null;
+    document.getElementById("quantity").value = null;
   };
 
   const handleClick = (event, name) => {
@@ -347,10 +355,14 @@ const AppGridComponent = ({ appData, addOrEdit, setTableSelectedElements, delete
 
     setSelected(newSelected);
     setTableSelected(newSelected);
-    //console.log(selectedIndex); // value of 0 will unselect all items from the table
-    //console.log(newSelected.length); // value of 0 will unselect all items from the table
+    
     if (!newSelected) (addOrEdit(false));
     newSelected.length === 1 ? addOrEdit(true) : addOrEdit(false);
+    if (newSelected.length === 1) {
+      fillInInputs(newSelected[0]);
+    } else {
+      clearInputs();
+    }
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -361,7 +373,11 @@ const AppGridComponent = ({ appData, addOrEdit, setTableSelectedElements, delete
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} deleteItemsFromTable={deleteItemsFromTable} />
+        <EnhancedTableToolbar 
+          numSelected={selected.length} 
+          deleteItemsFromTable={deleteItemsFromTable}
+          setSelected={setSelected}
+          addOrEdit={addOrEdit} />
         <TableContainer className={classes.tableHeigth}>
           <Table
             stickyHeader
@@ -380,7 +396,11 @@ const AppGridComponent = ({ appData, addOrEdit, setTableSelectedElements, delete
               rowCount={rows.length}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy)).map(
+              {stableSort(
+                appData.appReducer.calculatedData.calculatedResults.length
+                ? appData.appReducer.calculatedData.calculatedResults
+                : [], getComparator(order, orderBy))
+                .map(
                 (row, index) => {
                   const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
@@ -392,7 +412,7 @@ const AppGridComponent = ({ appData, addOrEdit, setTableSelectedElements, delete
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.id}
+                      key={index}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -440,7 +460,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addOrEdit: (item) => dispatch(addOrEdit(item)),
     setTableSelectedElements: (dataArr) => dispatch(setTableSelectedElements(dataArr)),
-    deleteItemsFromTable: (dataArray, indexesToDelete) => dispatch(deleteItemsFromTable(dataArray, indexesToDelete))
+    deleteItemsFromTable: (dataArray, indexesToDelete) => dispatch(deleteItemsFromTable(dataArray, indexesToDelete)),
+    saveIndexToEdit: (item) => dispatch(saveIndexToEdit(item))
   };
 };
 

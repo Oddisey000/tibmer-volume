@@ -34,19 +34,20 @@ const AddButtonComponent = ({ appData, createTimberVolumeData, displayCalculatio
 
   // Fill in data object with data for specific property
   const createVolumeDataObj = () => {
-    const timberDiametr = document.getElementById("diameter").value;
+    let timberDiametr = document.getElementById("diameter").value;
+    timberDiametr = timberDiametr < 4 ? 4 : timberDiametr;
     const timberLength = document.getElementById("length").value;
     const timberQuantity = document.getElementById("quantity").value;
     const timberPrice = document.getElementById("price").value;
 
     if (timberDiametr && timberLength && timberQuantity && timberPrice) {
-      dataObj["diameter"] = Math.ceil(timberDiametr) < 3 ? 3 : Math.ceil(timberDiametr);
+      dataObj["diameter"] = Math.ceil(timberDiametr);
       dataObj["length"] = parseFloat(timberLength);
       dataObj["quantity"] = Math.ceil(timberQuantity);
       dataObj["price"] = parseFloat(timberPrice);
 
       document.getElementById("diameter").value = null;
-      document.getElementById("diameter").focus();
+      //document.getElementById("diameter").focus();
 
       createTimberVolumeData(
         dataObj,
@@ -59,8 +60,8 @@ const AddButtonComponent = ({ appData, createTimberVolumeData, displayCalculatio
   };
 
   // Conditionaly apply budge icon
-  const insertedData = appData.appReducer.calculatedData.calculatedResults
-    ? appData.appReducer.calculatedData.calculatedResults.length
+  const insertedData = appData.appReducer.calculatedData.calculatedResults.length
+    ? appData.appReducer.calculatedData.calculatedResults.map((item) => (item.quantity)).reduce((a, b) => a + b)
     : null; // You need to use data from state
 
   const displayBudge = insertedData ? (

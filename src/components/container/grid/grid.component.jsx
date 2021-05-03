@@ -9,7 +9,7 @@ import EditButtonComponent from "../edit-button/edit-button.component";
 import EnhancedTable from "../data-table/data.table.component";
 import SimplePaper from "../results-block/results.block.component";
 
-//import { setTableSelectedElements } from "../../../redux/app-reducer/app-reducer.actions";
+import { setTableSelectedElements, addOrEdit } from "../../../redux/app-reducer/app-reducer.actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,10 +23,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const AppGridComponent = ({ appData }) => {
+const AppGridComponent = ({ appData, addOrEdit, setTableSelectedElements }) => {
   // When user click away (usualy near the + button) this will unselect all the items inside table
   const handleClick = () => {
     //setTableSelectedElements([]);
+    addOrEdit(false);
+    setTableSelectedElements = [];
   };
 
   const classes = useStyles();
@@ -55,7 +57,7 @@ const AppGridComponent = ({ appData }) => {
   const displayData = (
     <Grid container spacing={3}>
       {displayResults}
-      <Grid item xs={12} onClick={handleClick}>
+      <Grid item xs={12}>
         <BasicTextFields />
       </Grid>
       <Grid item xs={12} onClick={handleClick}>
@@ -74,10 +76,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-/*const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    setTableSelectedElements: (emptyArray) => dispatch(setTableSelectedElements(emptyArray))
+    //setTableSelectedElements: (emptyArray) => dispatch(setTableSelectedElements(emptyArray))
+    addOrEdit: (condition) => dispatch(addOrEdit(condition)),
+    setTableSelectedElements: (item) => dispatch(setTableSelectedElements(item))
   };
-};*/
+};
 
-export default connect(mapStateToProps)(AppGridComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(AppGridComponent);

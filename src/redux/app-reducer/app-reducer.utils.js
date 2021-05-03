@@ -77,6 +77,8 @@ export const deleteFromArrByIndexes = (dataArray, indexesToDelete) => {
     return indexesToDelete.indexOf(index) == -1;
   });
 
+  dataArray.map((value, index) => value.id = index);
+
   return calculatedData = {
     calculatedResults: dataArray,
       calculatedSummary: {
@@ -85,6 +87,50 @@ export const deleteFromArrByIndexes = (dataArray, indexesToDelete) => {
           : null,
         price: dataArray.length
           ? dataArray.map((item) => (item.price)).reduce((a, b) => a + b)
+          : null
+      }
+  };
+};
+
+export const changeElement = (userDataObj, calculatedResults, volumeDataTable, elementIndex) => {
+  // A variable wich need to be returned in the end of the function
+  let calculatedData = {
+    calculatedResults: [],
+    calculatedSummary: {}
+  };
+
+  // Find if length inserted by user of timber is available in data object
+  const volumeLength = volumeDataTable[userDataObj.length]
+    ? // If exactly the same number in database just return value to variable
+      volumeDataTable[userDataObj.length]
+    : // If exact data not available then fix value to 1 digit, that value 100% should be in data object
+      volumeDataTable[Math.round(userDataObj.length * 10) / 10];
+
+  // Get timber volume data from the object
+  const timberVolume = volumeLength[Math.round(userDataObj.diameter)]
+    ? volumeLength[Math.round(userDataObj.diameter)]
+    : volumeLength[Math.round(userDataObj.diameter) - 1];
+
+    calculatedResults[elementIndex] = {
+    id: calculatedResults[elementIndex].id,
+    diametr: userDataObj.diameter,
+    length: userDataObj.length,
+    quantity: userDataObj.quantity,
+    volume: parseFloat(timberVolume),
+    price:
+      Math.round(
+        parseFloat(userDataObj.price) * parseFloat(timberVolume) * 100
+      ) / 100
+  };
+
+  return calculatedData = {
+    calculatedResults: calculatedResults,
+      calculatedSummary: {
+        volume: calculatedResults.length
+          ? calculatedResults.map((item) => (item.volume)).reduce((a, b) => a + b)
+          : null,
+        price: calculatedResults.length
+          ? calculatedResults.map((item) => (item.price)).reduce((a, b) => a + b)
           : null
       }
   };

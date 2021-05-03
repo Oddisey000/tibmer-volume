@@ -39,21 +39,21 @@ const BasicTextFields = ({ appData }) => {
       <TextField
         type="number"
         id="price"
-        label={appData.appReducer.languages[selectedLanguage].main.price}
+        label={appData.appReducer.languages[selectedLanguage].main.price} InputLabelProps={{shrink: true}}
         variant="outlined"
         onChange={checkIfNum}
       />
       <TextField
         type="number"
         id="quantity"
-        label={appData.appReducer.languages[selectedLanguage].main.quantity}
+        label={appData.appReducer.languages[selectedLanguage].main.quantity} InputLabelProps={{shrink: true}}
         onChange={checkIfNum}
       />
       <TextField
         placeholder="9.5 max"
         type="number"
         id="length"
-        label={appData.appReducer.languages[selectedLanguage].main.length}
+        label={appData.appReducer.languages[selectedLanguage].main.length} InputLabelProps={{shrink: true}}
         onChange={checkIfNum}
       />
       <TextField
@@ -61,7 +61,7 @@ const BasicTextFields = ({ appData }) => {
         type="number"
         pattern="[0-9]"
         id="diameter"
-        label={appData.appReducer.languages[selectedLanguage].main.diametr}
+        label={appData.appReducer.languages[selectedLanguage].main.diametr} InputLabelProps={{shrink: true}}
         onChange={checkIfNum}
       />
     </form>

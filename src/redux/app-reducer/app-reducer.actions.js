@@ -5,9 +5,11 @@ import {
   ADD_CALCULATED_DATA,
   ENABLE_DISPLAY_RESULTS,
   SET_TABLE_SELECTED_ELEMENTS,
-  DELETE_ITEMS
+  DELETE_ITEMS,
+  CHANGE_ELEMENT,
+  INDEX_TO_EDIT
 } from "./app-reducer.types";
-import { createTimberVolumeDataObj, deleteFromArrByIndexes } from "./app-reducer.utils";
+import { createTimberVolumeDataObj, deleteFromArrByIndexes, changeElement } from "./app-reducer.utils";
 
 export const changeAppLanguage = (selectedLanguage) => ({
   type: CHANGE_APP_LANGUAGE,
@@ -50,4 +52,14 @@ export const setTableSelectedElements = (dataArr) => ({
 export const deleteItemsFromTable = (dataArray, indexesToDelete) => ({
   type: DELETE_ITEMS,
   payload: deleteFromArrByIndexes(dataArray, indexesToDelete)
+});
+
+export const changeElementFromTable = (userDataObj, calculatedResults, volumeDataTable, elementIndex) => ({
+  type: CHANGE_ELEMENT,
+  payload: changeElement(userDataObj, calculatedResults, volumeDataTable, elementIndex)
+});
+
+export const saveIndexToEdit = (element) => ({
+  type: INDEX_TO_EDIT,
+  payload: element
 });

@@ -6,7 +6,9 @@ import {
   ADD_CALCULATED_DATA,
   ENABLE_DISPLAY_RESULTS,
   SET_TABLE_SELECTED_ELEMENTS,
-  DELETE_ITEMS
+  DELETE_ITEMS,
+  CHANGE_ELEMENT,
+  INDEX_TO_EDIT
 } from "./app-reducer.types";
 
 const appReducer = (state = INITIAL_STATE, action) => {
@@ -45,6 +47,16 @@ const appReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         calculatedData: action.payload
+      };
+    case CHANGE_ELEMENT:
+      return {
+        ...state,
+        calculatedData: action.payload
+      };
+    case INDEX_TO_EDIT:
+      return {
+        ...state,
+        IndexOfElementToEdit: action.payload
       }
     default:
       return state;

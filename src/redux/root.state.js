@@ -17,6 +17,7 @@ const INITIAL_STATE = {
     }
   },
   editMode: false,
+  IndexOfElementToEdit: Number,
   setTableSelectedElements: [],
   appDrawer: false,
   appHasData: false,
