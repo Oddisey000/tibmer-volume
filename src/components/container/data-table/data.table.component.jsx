@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { lighten, makeStyles } from "@material-ui/core/styles";
+import { ClickAwayListener } from '@material-ui/core';
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -267,6 +268,10 @@ const AppGridComponent = ({ appData, addOrEdit, setTableSelectedElements, delete
   takeAppData(appData);
   takeAppLanguage(appData);
 
+  const handleClickAway = () => {
+    setSelected([]);
+  }
+
   rows = appData.appReducer.calculatedData.calculatedResults.length
     ? appData.appReducer.calculatedData.calculatedResults
     : [];
@@ -301,11 +306,9 @@ const AppGridComponent = ({ appData, addOrEdit, setTableSelectedElements, delete
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
-  const [selected, setSelected] = React.useState(appData.appReducer.setTableSelectedElements);
+  const [selected, setSelected] = React.useState([]);
   const [page] = React.useState(0);
   const [rowsPerPage] = React.useState(5);
-
-  //if (appData.appReducer.clickAway) (setSelected([]));
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -362,6 +365,7 @@ const AppGridComponent = ({ appData, addOrEdit, setTableSelectedElements, delete
       fillInInputs(newSelected[0]);
     } else {
       clearInputs();
+      setTableSelected([]);
     }
   };
 
@@ -371,82 +375,84 @@ const AppGridComponent = ({ appData, addOrEdit, setTableSelectedElements, delete
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
-    <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <EnhancedTableToolbar 
-          numSelected={selected.length} 
-          deleteItemsFromTable={deleteItemsFromTable}
-          setSelected={setSelected}
-          addOrEdit={addOrEdit} />
-        <TableContainer className={classes.tableHeigth}>
-          <Table
-            stickyHeader
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            size={"medium"}
-            aria-label="sticky table"
-          >
-            <EnhancedTableHead
-              classes={classes}
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {stableSort(
-                appData.appReducer.calculatedData.calculatedResults.length
-                ? appData.appReducer.calculatedData.calculatedResults
-                : [], getComparator(order, orderBy))
-                .map(
-                (row, index) => {
-                  const isItemSelected = isSelected(row.id);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+    <ClickAwayListener onClickAway={handleClickAway}>
+      <div className={classes.root}>
+        <Paper className={classes.paper}>
+          <EnhancedTableToolbar 
+            numSelected={selected.length} 
+            deleteItemsFromTable={deleteItemsFromTable}
+            setSelected={setSelected}
+            addOrEdit={addOrEdit} />
+          <TableContainer className={classes.tableHeigth}>
+            <Table
+              stickyHeader
+              className={classes.table}
+              aria-labelledby="tableTitle"
+              size={"medium"}
+              aria-label="sticky table"
+            >
+              <EnhancedTableHead
+                classes={classes}
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+              />
+              <TableBody>
+                {stableSort(
+                  appData.appReducer.calculatedData.calculatedResults.length
+                  ? appData.appReducer.calculatedData.calculatedResults
+                  : [], getComparator(order, orderBy))
+                  .map(
+                  (row, index) => {
+                    const isItemSelected = isSelected(row.id);
+                    const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.id)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={index}
-                      selected={isItemSelected}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ "aria-labelledby": labelId }}
-                        />
-                      </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
+                    return (
+                      <TableRow
+                        hover
+                        onClick={(event) => handleClick(event, row.id)}
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={index}
+                        selected={isItemSelected}
                       >
-                        {row.diametr}
-                      </TableCell>
-                      <TableCell align="right">{row.length}</TableCell>
-                      <TableCell align="right">{row.quantity}</TableCell>
-                      <TableCell align="right">{row.volume}</TableCell>
-                      <TableCell align="right">{row.price}</TableCell>
-                    </TableRow>
-                  );
-                }
-              )}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 53 }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-    </div>
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            checked={isItemSelected}
+                            inputProps={{ "aria-labelledby": labelId }}
+                          />
+                        </TableCell>
+                        <TableCell
+                          component="th"
+                          id={labelId}
+                          scope="row"
+                          padding="none"
+                        >
+                          {row.diametr}
+                        </TableCell>
+                        <TableCell align="right">{row.length}</TableCell>
+                        <TableCell align="right">{row.quantity}</TableCell>
+                        <TableCell align="right">{row.volume}</TableCell>
+                        <TableCell align="right">{row.price}</TableCell>
+                      </TableRow>
+                    );
+                  }
+                )}
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: 53 }}>
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
+      </div>
+    </ClickAwayListener>
   );
 };
 
