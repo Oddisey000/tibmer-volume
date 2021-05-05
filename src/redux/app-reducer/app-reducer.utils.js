@@ -11,10 +11,11 @@ export const createTimberVolumeDataObj = (
     : // If exact data not available then fix value to 1 digit, that value 100% should be in data object
       volumeDataTable[Math.round(userDataObj.length * 10) / 10];
 
+  const fixedDiameter = userDataObj.diameter <= 4 ? 4 : userDataObj.diameter;
   // Get timber volume data from the object
-  const timberVolume = volumeLength[Math.round(userDataObj.diameter)]
-    ? volumeLength[Math.round(userDataObj.diameter)]
-    : volumeLength[Math.round(userDataObj.diameter) - 1];
+  const timberVolume = volumeLength[Math.round(fixedDiameter)]
+    ? volumeLength[Math.round(fixedDiameter)]
+    : volumeLength[Math.round(fixedDiameter) - 1];
 
   // Check how much elements inside calculated results array
   const culculatedResultData = calculatedResults ? calculatedResults.length : 0;
@@ -26,11 +27,11 @@ export const createTimberVolumeDataObj = (
 
   // Check if calculated results object already have data
   //if (culculatedResultData > 0) {
-    // If it has data then id number should next one after length parameter
-    createfixedUserDataObj(culculatedResultData);
+  // If it has data then id number should next one after length parameter
+  createfixedUserDataObj(culculatedResultData);
   //} else {
-    // If there is no data then id should start from 0
-    //createfixedUserDataObj(culculatedResultData);
+  // If there is no data then id should start from 0
+  //createfixedUserDataObj(culculatedResultData);
   //}
 
   function createfixedUserDataObj(idValue) {
@@ -52,17 +53,23 @@ export const createTimberVolumeDataObj = (
     calculatedResultsArr.push(fixedUserDataObj);
     return { calculatedResultsArr };
   }
-  return calculatedData = {
+  return (calculatedData = {
     calculatedResults: calculatedResultsArr,
-      calculatedSummary: {
-        volume: calculatedResultsArr.length === 1
+    calculatedSummary: {
+      volume:
+        calculatedResultsArr.length === 1
           ? calculatedResultsArr[0].volume
-          : calculatedResultsArr.map((item) => (item.volume)).reduce((a, b) => a + b),
-        price: calculatedResultsArr.length === 1
+          : calculatedResultsArr
+              .map((item) => item.volume)
+              .reduce((a, b) => a + b),
+      price:
+        calculatedResultsArr.length === 1
           ? calculatedResultsArr[0].price
-          : calculatedResultsArr.map((item) => (item.price)).reduce((a, b) => a + b)
-      }
-  };
+          : calculatedResultsArr
+              .map((item) => item.price)
+              .reduce((a, b) => a + b)
+    }
+  });
 };
 
 // Delete from data table
@@ -73,26 +80,31 @@ export const deleteFromArrByIndexes = (dataArray, indexesToDelete) => {
     calculatedSummary: {}
   };
 
-  dataArray = dataArray.filter(function(value, index) {
+  dataArray = dataArray.filter(function (value, index) {
     return indexesToDelete.indexOf(index) == -1;
   });
 
-  dataArray.map((value, index) => value.id = index);
+  dataArray.map((value, index) => (value.id = index));
 
-  return calculatedData = {
+  return (calculatedData = {
     calculatedResults: dataArray,
-      calculatedSummary: {
-        volume: dataArray.length
-          ? dataArray.map((item) => (item.volume)).reduce((a, b) => a + b)
-          : null,
-        price: dataArray.length
-          ? dataArray.map((item) => (item.price)).reduce((a, b) => a + b)
-          : null
-      }
-  };
+    calculatedSummary: {
+      volume: dataArray.length
+        ? dataArray.map((item) => item.volume).reduce((a, b) => a + b)
+        : null,
+      price: dataArray.length
+        ? dataArray.map((item) => item.price).reduce((a, b) => a + b)
+        : null
+    }
+  });
 };
 
-export const changeElement = (userDataObj, calculatedResults, volumeDataTable, elementIndex) => {
+export const changeElement = (
+  userDataObj,
+  calculatedResults,
+  volumeDataTable,
+  elementIndex
+) => {
   // A variable wich need to be returned in the end of the function
   let calculatedData = {
     calculatedResults: [],
@@ -106,12 +118,13 @@ export const changeElement = (userDataObj, calculatedResults, volumeDataTable, e
     : // If exact data not available then fix value to 1 digit, that value 100% should be in data object
       volumeDataTable[Math.round(userDataObj.length * 10) / 10];
 
+  const fixedDiameter = userDataObj.diameter <= 4 ? 4 : userDataObj.diameter;
   // Get timber volume data from the object
-  const timberVolume = volumeLength[Math.round(userDataObj.diameter)]
-    ? volumeLength[Math.round(userDataObj.diameter)]
-    : volumeLength[Math.round(userDataObj.diameter) - 1];
+  const timberVolume = volumeLength[Math.round(fixedDiameter)]
+    ? volumeLength[Math.round(fixedDiameter)]
+    : volumeLength[Math.round(fixedDiameter) - 1];
 
-    calculatedResults[elementIndex] = {
+  calculatedResults[elementIndex] = {
     id: calculatedResults[elementIndex].id,
     diametr: userDataObj.diameter,
     length: userDataObj.length,
@@ -123,15 +136,15 @@ export const changeElement = (userDataObj, calculatedResults, volumeDataTable, e
       ) / 100
   };
 
-  return calculatedData = {
+  return (calculatedData = {
     calculatedResults: calculatedResults,
-      calculatedSummary: {
-        volume: calculatedResults.length
-          ? calculatedResults.map((item) => (item.volume)).reduce((a, b) => a + b)
-          : null,
-        price: calculatedResults.length
-          ? calculatedResults.map((item) => (item.price)).reduce((a, b) => a + b)
-          : null
-      }
-  };
+    calculatedSummary: {
+      volume: calculatedResults.length
+        ? calculatedResults.map((item) => item.volume).reduce((a, b) => a + b)
+        : null,
+      price: calculatedResults.length
+        ? calculatedResults.map((item) => item.price).reduce((a, b) => a + b)
+        : null
+    }
+  });
 };

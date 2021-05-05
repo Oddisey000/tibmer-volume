@@ -5,7 +5,11 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 
-import { createTimberVolumeData, displayCalculation, makeCalcSummary } from "../../../redux/app-reducer/app-reducer.actions";
+import {
+  createTimberVolumeData,
+  displayCalculation,
+  makeCalcSummary
+} from "../../../redux/app-reducer/app-reducer.actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,24 +33,27 @@ const StyledBadge = withStyles((theme) => ({
 
 let dataObj = {}; // Need for sending data to state
 
-const AddButtonComponent = ({ appData, createTimberVolumeData, displayCalculation }) => {
+const AddButtonComponent = ({
+  appData,
+  createTimberVolumeData,
+  displayCalculation
+}) => {
   const classes = useStyles();
 
   // Fill in data object with data for specific property
   const createVolumeDataObj = () => {
     let timberDiametr = document.getElementById("diameter").value;
-    timberDiametr = timberDiametr < 4 ? 4 : timberDiametr;
     const timberLength = document.getElementById("length").value;
     const timberQuantity = document.getElementById("quantity").value;
     const timberPrice = document.getElementById("price").value;
 
     if (timberDiametr && timberLength && timberQuantity && timberPrice) {
+      document.getElementById("diameter").value = "";
       dataObj["diameter"] = Math.ceil(timberDiametr);
       dataObj["length"] = parseFloat(timberLength);
       dataObj["quantity"] = Math.ceil(timberQuantity);
       dataObj["price"] = parseFloat(timberPrice);
 
-      document.getElementById("diameter").value = null;
       //document.getElementById("diameter").focus();
 
       createTimberVolumeData(
@@ -54,14 +61,17 @@ const AddButtonComponent = ({ appData, createTimberVolumeData, displayCalculatio
         appData.appReducer.calculatedData.calculatedResults,
         appData.appReducer.volumeData.timberVolume.volumeDataStandard
       );
-      
+
       displayCalculation(true);
     }
   };
 
   // Conditionaly apply budge icon
-  const insertedData = appData.appReducer.calculatedData.calculatedResults.length
-    ? appData.appReducer.calculatedData.calculatedResults.map((item) => (item.quantity)).reduce((a, b) => a + b)
+  const insertedData = appData.appReducer.calculatedData.calculatedResults
+    .length
+    ? appData.appReducer.calculatedData.calculatedResults
+        .map((item) => item.quantity)
+        .reduce((a, b) => a + b)
     : null; // You need to use data from state
 
   const displayBudge = insertedData ? (
