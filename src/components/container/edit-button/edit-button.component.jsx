@@ -6,7 +6,6 @@ import EditIcon from "@material-ui/icons/Edit";
 
 import { changeElementFromTable } from "../../../redux/app-reducer/app-reducer.actions";
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -20,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 let dataObj = {}; // Need for sending data to state
 
-const EditButtonComponent = ({appData, changeElementFromTable }) => {
+const EditButtonComponent = ({ appData, changeElementFromTable }) => {
   const classes = useStyles();
 
   const handleOnClick = () => {
@@ -30,7 +29,7 @@ const EditButtonComponent = ({appData, changeElementFromTable }) => {
     const timberPrice = document.getElementById("price").value;
 
     if (timberDiametr && timberLength && timberQuantity && timberPrice) {
-      dataObj["diameter"] = Math.ceil(timberDiametr) < 3 ? 3 : Math.ceil(timberDiametr);
+      dataObj["diameter"] = Math.ceil(timberDiametr);
       dataObj["length"] = parseFloat(timberLength);
       dataObj["quantity"] = Math.ceil(timberQuantity);
       dataObj["price"] = parseFloat(timberPrice);
@@ -58,7 +57,7 @@ const EditButtonComponent = ({appData, changeElementFromTable }) => {
       </Fab>
     </div>
   );
-}
+};
 
 const mapStateToProps = (state) => {
   return {
@@ -73,4 +72,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditButtonComponent);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditButtonComponent);
