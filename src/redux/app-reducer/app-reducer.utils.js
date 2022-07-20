@@ -40,11 +40,11 @@ export const createTimberVolumeDataObj = (
       diametr: userDataObj.diameter,
       length: userDataObj.length,
       quantity: userDataObj.quantity,
-      volume: parseFloat(timberVolume),
+      volume: parseFloat(timberVolume) * userDataObj.quantity,
       price:
         Math.round(
           parseFloat(userDataObj.price) * parseFloat(timberVolume) * 100
-        ) / 100
+        ) / 100 * userDataObj.quantity
     };
     createData(fixedUserDataObj);
   }
@@ -129,11 +129,11 @@ export const changeElement = (
     diametr: userDataObj.diameter,
     length: userDataObj.length,
     quantity: userDataObj.quantity,
-    volume: parseFloat(timberVolume),
+    volume: parseFloat(timberVolume) * userDataObj.quantity,
     price:
       Math.round(
         parseFloat(userDataObj.price) * parseFloat(timberVolume) * 100
-      ) / 100
+      ) / 100 * userDataObj.quantity
   };
 
   return (calculatedData = {
